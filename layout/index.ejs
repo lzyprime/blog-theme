@@ -1,7 +1,22 @@
-<div class="mdc-layout-grid">
-    <div class="mdc-layout-grid__inner">
-        <div class="mdc-layout-grid__cell">dd</div>
-        <div class="mdc-layout-grid__cell">dd</div>
-        <div class="mdc-layout-grid__cell">dd</div>
-    </div>
+<div class="card bg-dark h-100 position-relative">
+
+    <% if(theme.banner) { %>
+        <img src="<%= theme.banner %>" class="card-img h-100" alt="banner">
+        <% } %>
+
+            <div class="p-3 card-img-overlay text-center position-absolute top-50 start-50 translate-middle">
+                <p class="card-title display-1 fw-bold text-primary">
+                    <%= config.title %>
+                </p>
+                <p class="card-text h1 text-dark">
+                    <%= config.subtitle %>
+                </p>
+            </div>
+</div>
+
+
+<div class="container w-75 my-5 gy-3">
+    <% page.posts.forEach(post=> { %>
+        <%- partial("_item/item_post", {post: post})%>
+            <% }); %>
 </div>

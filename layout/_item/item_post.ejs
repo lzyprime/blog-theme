@@ -1,0 +1,8 @@
+<a class="btn btn-dark bg-gradient w-100 p-3 text-center shadow" href="<%- url_for(post.path) %>">
+    <h1 class="text-white">
+        <%= post.title %>
+    </h1>
+    <p class="text-secondary">
+        <%- date(post.updated, 'YYYY.MM.DD' ) %>
+    </p>
+</a>

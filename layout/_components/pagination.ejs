@@ -1,0 +1,59 @@
+<%
+    if(typeof format == "undefined") {
+        var format = "page/";
+    }
+
+    if(typeof debug == "undefined") {
+        var debug = false;
+    }
+
+    let per_index = config.index_generator.per_index;
+    let start_index = Math.max(page.current - 1, 1);
+    let end_index = Math.min(start_index + per_index - 2, page.total);
+    start_index = Math.min(Math.max(end_index - per_index, 1), start_index);
+%> 
+
+<% if(debug) { %>
+    <p class="text-white"> per_index: <%= per_index %></p>
+    
+    <p class="text-white"> start_index: <%= start_index %></p>
+    
+    <p class="text-white"> end_index: <%= end_index %></p>
+    
+    <p class="text-white"> start_index <%= start_index %></p>
+    
+<% } %>
+
+<% if(page.total > 1) { %>
+    <nav aria-label="index post list pagination" class="bg-dark">
+        <ul class="pagination justify-content-center">
+            <li class="page-item <% if(page.prev == 0) { %>disabled<% } %>">
+                <a class="page-link" href="<%- url_for(page.prev_link) %>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <% for(let i = start_index; i <= end_index; i++) { %>
+                <li class="page-item <% if(i == page.current) { %>active<% } %>"><a class="page-link" href="<%- i == 1 ? url_for() : url_for(format + i) %>"><%=i%></a></li>
+            <% } %>
+            <li class="page-item <% if(page.next == 0) { %>disabled<% } %>">
+                <a class="page-link" href="<%- url_for(page.next_link) %>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<% } %>
+
+<% if(debug) { %>
+<p class="text-white"> total: <%= page.total %></p>
+
+<p class="text-white"> current: <%= page.current %></p>
+
+<p class="text-white"> pre link: <%= page.prev_link %></p>
+
+<p class="text-white"> pre index: <%= page.prev %></p>
+
+<p class="text-white">next link: <%= page.next_link %></p>
+
+<p class="text-white">next index: <%= page.next %></p>
+<% } %>

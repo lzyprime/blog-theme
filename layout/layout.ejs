@@ -5,16 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <style type="text/css">
-        html,
-        body {
-            padding: 0;
-            margin: 0;
-            height: 100%;
-        }
-    </style>
-
-    <%- css("bootstrap/css/bootstrap.min.css") %>
+    <%- css(["bootstrap/css/bootstrap.min.css", "css/global.css"]) %>
+    <% if(is_post()) { %><%- css("css/article.css") %><% } %>
+    
     <%- js("bootstrap/js/bootstrap.bundle.min.js") %>
 
     <title>

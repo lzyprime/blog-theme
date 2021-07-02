@@ -1,3 +1,15 @@
+h1, h2, h3, h4, h5, h6 {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+code {
+  border-radius: 3px;
+  background-color: #282c34;
+  margin: 0px 3px;
+  padding: 1px 3px;
+}
+
 figure.highlight {
   background: #282c34;
   color: #abb2bf;
@@ -6,17 +18,32 @@ figure.highlight {
 figure.highlight
 table {
 	width:100%;
-	table-layout:fixed;
+	table-layout: fixed;
 }
+
+figure.highlight
+table
+td.gutter {
+  width: 30px;
+  text-align: center;
+  border-right: 2px solid black;
+}
+
 figure.highlight
 table
 td.code {
-	width:100%;
-	word-break:keep-all;/* 不换行 */
-	white-space:nowrap;/* 不换行 */
-	overflow:auto;/* 内容超出宽度时隐藏超出部分的内容 */
+  padding: 5px 10px;
+	word-break:keep-all;
+	white-space:nowrap;
+	overflow: auto;
 }
 
+blockquote
+p {
+  border-left: 3px solid #e06c75;
+  padding-left: 8px;
+  color: #abb2bf;
+}
 
 .comment,
 .quote {

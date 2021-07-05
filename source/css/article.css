@@ -15,6 +15,11 @@ figure.highlight {
   color: #abb2bf;
 }
 
+p
+img {
+  width: 100%;
+}
+
 figure.highlight
 table {
 	width:100%;

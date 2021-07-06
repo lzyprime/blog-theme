@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    
+<link rel="stylesheet" href="/blog-theme/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/blog-theme/css/global.css">
+
+    
+<link rel="stylesheet" href="/blog-theme/css/article.css">
+
+    
+    
+<script src="/blog-theme/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <title>
+        I&#39;m prime
+    </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="bg-dark">
+    <header>
+    <nav class="navbar navbar-expand navbar-expand-lg navbar-dark sticky-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/blog-theme/">
+
+                
+
+            I&#39;m prime
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/">
+                                主页
+                            </a>
+                        </li>
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/archives/">
+                                归档
+                            </a>
+                        </li>
+
+                    
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+    <div class="container-fluid mt-md-5">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-5 shadow-lg">
+            <div class="container-fluid mt-5 text-center">
+                <h1 class="text-white">
+                    1046. 最后一块石头的重量(每日一题)
+                </h1>
+                <p class="mt-2 text-secondary">
+                    2020.12.31
+                </p>
+            </div>
+
+            <article class="container-fluid text-white">
+                <h2 id="leetcode-笔记"><a href="#leetcode-笔记" class="headerlink" title="leetcode 笔记"></a><a href="https://lzyprime.github.io/leetcode/leetcode">leetcode 笔记</a></h2><hr>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>有一堆石头，每块石头的重量都是正整数。</p>
+<p>每一回合，从中选出两块 最重的 石头，然后将它们一起粉碎。假设石头的重量分别为 x 和 y，且 x &lt;= y。那么粉碎的可能结果如下：</p>
+<ul>
+<li>如果 x == y，那么两块石头都会被完全粉碎；</li>
+<li>如果 x != y，那么重量为 x 的石头将会完全粉碎，而重量为 y 的石头新重量为 y-x。</li>
+</ul>
+<p>最后，最多只会剩下一块石头。返回此石头的重量。如果没有石头剩下，就返回 0。
+ </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">示例：</span><br><span class="line"></span><br><span class="line">输入：[<span class="number">2</span>,<span class="number">7</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">8</span>,<span class="number">1</span>]</span><br><span class="line">输出：<span class="number">1</span></span><br><span class="line">解释：</span><br><span class="line">先选出 <span class="number">7</span> 和 <span class="number">8</span>，得到 <span class="number">1</span>，所以数组转换为 [<span class="number">2</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>]，</span><br><span class="line">再选出 <span class="number">2</span> 和 <span class="number">4</span>，得到 <span class="number">2</span>，所以数组转换为 [<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>]，</span><br><span class="line">接着是 <span class="number">2</span> 和 <span class="number">1</span>，得到 <span class="number">1</span>，所以数组转换为 [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>]，</span><br><span class="line">最后选出 <span class="number">1</span> 和 <span class="number">1</span>，得到 <span class="number">0</span>，最终数组转换为 [<span class="number">1</span>]，这就是最后剩下那块石头的重量。</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> &lt;= stones.length &lt;= <span class="number">30</span></span><br><span class="line"><span class="number">1</span> &lt;= stones[i] &lt;= <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/last-stone-weight">https://leetcode-cn.com/problems/last-stone-weight</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。  </p>
+</blockquote>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><p>堆排</p>
+<ul>
+<li><h3 id="c"><a href="#c" class="headerlink" title="c++"></a>c++</h3></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">lastStoneWeight</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; stones)</span> </span>&#123;</span><br><span class="line">    <span class="function">priority_queue&lt;<span class="keyword">int</span>&gt; <span class="title">pq</span><span class="params">(stones.begin(), stones.end())</span></span>;</span><br><span class="line">    <span class="keyword">while</span> (pq.<span class="built_in">size</span>() &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">      <span class="keyword">int</span> v1 = pq.<span class="built_in">top</span>();</span><br><span class="line">      pq.<span class="built_in">pop</span>();</span><br><span class="line">      <span class="keyword">int</span> ns = <span class="built_in">abs</span>(pq.<span class="built_in">top</span>() - v1);</span><br><span class="line">      pq.<span class="built_in">pop</span>();</span><br><span class="line">      <span class="keyword">if</span> (ns) pq.<span class="built_in">push</span>(ns);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pq.<span class="built_in">empty</span>()) <span class="keyword">return</span> <span class="number">0</span>; <span class="keyword">else</span> <span class="keyword">return</span> pq.<span class="built_in">top</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h3 id="kotlin"><a href="#kotlin" class="headerlink" title="kotlin"></a>kotlin</h3></li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.PriorityQueue</span><br><span class="line"><span class="keyword">import</span> kotlin.math.abs</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">lastStoneWeight</span><span class="params">(stones: <span class="type">IntArray</span>)</span></span>: <span class="built_in">Int</span> =</span><br><span class="line">        PriorityQueue&lt;<span class="built_in">Int</span>&gt;(stones.size) &#123; v1, v2 -&gt; v2 - v1 &#125;.apply &#123;</span><br><span class="line">            addAll(stones.toList())</span><br><span class="line">            <span class="keyword">while</span> (size &gt; <span class="number">1</span>) <span class="keyword">when</span> (<span class="keyword">val</span> ns = abs(poll() - poll())) &#123;</span><br><span class="line">                <span class="number">0</span> -&gt; <span class="built_in">Unit</span></span><br><span class="line">                <span class="keyword">else</span> -&gt; offer(ns)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.lastOrNull() ?: <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h3 id="scala"><a href="#scala" class="headerlink" title="scala"></a>scala</h3></li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scala.collection.mutable</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">lastStoneWeight</span></span>(stones: <span class="type">Array</span>[<span class="type">Int</span>]): <span class="type">Int</span> = &#123;</span><br><span class="line">      <span class="keyword">val</span> q = mutable.<span class="type">PriorityQueue</span>.from(stones)</span><br><span class="line">      <span class="keyword">while</span> (q.size &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">        (q.dequeue() - q.dequeue()).abs <span class="keyword">match</span> &#123;</span><br><span class="line">          <span class="keyword">case</span> <span class="number">0</span> =&gt; <span class="type">None</span></span><br><span class="line">          <span class="keyword">case</span> v =&gt; q.enqueue(v)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    q.lastOption.getOrElse(<span class="number">0</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>模式匹配</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@tailrec</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lastStoneWeight</span></span>(stones: <span class="type">Array</span>[<span class="type">Int</span>]): <span class="type">Int</span> = stones.sorted.reverse.toList <span class="keyword">match</span> &#123;<span class="keyword">case</span> v1 :: v2 :: list =&gt; <span class="keyword">if</span>(v1 == v2) lastStoneWeight(list.toArray)<span class="keyword">else</span> lastStoneWeight(((v1 - v2) :: list).toArray) <span class="keyword">case</span> list =&gt; list.lastOption.getOrElse(<span class="number">0</span>)&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scala.annotation.tailrec</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">  <span class="meta">@tailrec</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">lastStoneWeight</span></span>(stones: <span class="type">Array</span>[<span class="type">Int</span>]): <span class="type">Int</span> = stones.sorted.reverse.toList <span class="keyword">match</span> &#123;</span><br><span class="line">      <span class="keyword">case</span> v1 :: v2 :: list =&gt; <span class="keyword">if</span>(v1 == v2) lastStoneWeight(list.toArray) <span class="keyword">else</span> lastStoneWeight(((v1 - v2) :: list).toArray)</span><br><span class="line">      <span class="keyword">case</span> list =&gt; list.lastOption.getOrElse(<span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h3 id="Rust"><a href="#Rust" class="headerlink" title="Rust"></a>Rust</h3></li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::collections::BinaryHeap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Solution &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">last_stone_weight</span></span>(stones: <span class="built_in">Vec</span>&lt;<span class="built_in">i32</span>&gt;) -&gt; <span class="built_in">i32</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut</span> heap = BinaryHeap::from(stones);</span><br><span class="line">        <span class="keyword">while</span> heap.len() &gt;= <span class="number">2</span> &#123;</span><br><span class="line">            <span class="keyword">match</span> heap.pop().unwrap() - heap.pop().unwrap() &#123;</span><br><span class="line">                <span class="number">0</span> =&gt; (),</span><br><span class="line">                v =&gt; heap.push(v)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        heap.pop().unwrap_or(<span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </article>
+        </div>
+
+        <div class="col"></div>
+    </div>
+</div>
+    <footer class="h-25"> footer </footer>
+</body>
+
+</html>

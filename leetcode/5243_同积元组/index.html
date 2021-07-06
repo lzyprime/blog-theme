@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    
+<link rel="stylesheet" href="/blog-theme/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/blog-theme/css/global.css">
+
+    
+<link rel="stylesheet" href="/blog-theme/css/article.css">
+
+    
+    
+<script src="/blog-theme/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <title>
+        I&#39;m prime
+    </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="bg-dark">
+    <header>
+    <nav class="navbar navbar-expand navbar-expand-lg navbar-dark sticky-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/blog-theme/">
+
+                
+
+            I&#39;m prime
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/">
+                                主页
+                            </a>
+                        </li>
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/archives/">
+                                归档
+                            </a>
+                        </li>
+
+                    
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+    <div class="container-fluid mt-md-5">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-5 shadow-lg">
+            <div class="container-fluid mt-5 text-center">
+                <h1 class="text-white">
+                    5243. 同积元组(第 224 场周赛)
+                </h1>
+                <p class="mt-2 text-secondary">
+                    2021.01.17
+                </p>
+            </div>
+
+            <article class="container-fluid text-white">
+                <h2 id="leetcode-笔记"><a href="#leetcode-笔记" class="headerlink" title="leetcode 笔记"></a><a href="https://lzyprime.github.io/leetcode/leetcode">leetcode 笔记</a></h2><hr>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给你一个由 不同 正整数组成的数组 nums ，请你返回满足 a * b = c * d 的元组 (a, b, c, d) 的数量。其中 a、b、c 和 d 都是 nums 中的元素，且 a != b != c != d 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：nums = [2,3,4,6]</span><br><span class="line">输出：8</span><br><span class="line">解释：存在 8 个满足题意的元组：</span><br><span class="line">(2,6,3,4) , (2,6,4,3) , (6,2,3,4) , (6,2,4,3)</span><br><span class="line">(3,4,2,6) , (3,4,2,6) , (3,4,6,2) , (4,3,6,2)</span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：nums = [1,2,4,5,10]</span><br><span class="line">输出：16</span><br><span class="line">解释：存在 16 个满足题意的元组：</span><br><span class="line">(1,10,2,5) , (1,10,5,2) , (10,1,2,5) , (10,1,5,2)</span><br><span class="line">(2,5,1,10) , (2,5,10,1) , (5,2,1,10) , (5,2,10,1)</span><br><span class="line">(2,10,4,5) , (2,10,5,4) , (10,2,4,5) , (10,2,4,5)</span><br><span class="line">(4,5,2,10) , (4,5,10,2) , (5,4,2,10) , (5,4,10,2)</span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：nums = [2,3,4,6,8,12]</span><br><span class="line">输出：40</span><br><span class="line">示例 4：</span><br><span class="line"></span><br><span class="line">输入：nums = [2,3,5,7]</span><br><span class="line">输出：0</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line"></span><br><span class="line">1 &lt;= nums.length &lt;= 1000</span><br><span class="line">1 &lt;= nums[i] &lt;= 104</span><br><span class="line">nums 中的所有元素 互不相同</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/tuple-with-same-product">https://leetcode-cn.com/problems/tuple-with-same-product</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+</blockquote>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><ul>
+<li><h3 id="c"><a href="#c" class="headerlink" title="c++"></a>c++</h3></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">tupleSameProduct</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">int</span> size = nums.<span class="built_in">size</span>();</span><br><span class="line">        unordered_map&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; mp;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size - <span class="number">1</span>; i++)</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; size; j++)</span><br><span class="line">                mp[nums[i] * nums[j]]++;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> i : mp) </span><br><span class="line">            ans += i.second * (i.second - <span class="number">1</span>) * <span class="number">4</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+            </article>
+        </div>
+
+        <div class="col"></div>
+    </div>
+</div>
+    <footer class="h-25"> footer </footer>
+</body>
+
+</html>

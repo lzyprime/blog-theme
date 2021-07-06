@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    
+<link rel="stylesheet" href="/blog-theme/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/blog-theme/css/global.css">
+
+    
+<link rel="stylesheet" href="/blog-theme/css/article.css">
+
+    
+    
+<script src="/blog-theme/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <title>
+        I&#39;m prime
+    </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="bg-dark">
+    <header>
+    <nav class="navbar navbar-expand navbar-expand-lg navbar-dark sticky-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/blog-theme/">
+
+                
+
+            I&#39;m prime
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/">
+                                主页
+                            </a>
+                        </li>
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/archives/">
+                                归档
+                            </a>
+                        </li>
+
+                    
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+    <div class="container-fluid mt-md-5">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-5 shadow-lg">
+            <div class="container-fluid mt-5 text-center">
+                <h1 class="text-white">
+                    Linux 下 vmware 虚拟机
+                </h1>
+                <p class="mt-2 text-secondary">
+                    2019.10.26
+                </p>
+            </div>
+
+            <article class="container-fluid text-white">
+                <h2 id="λ："><a href="#λ：" class="headerlink" title="λ："></a>λ：</h2><h3 id="deepin-以及-deepin-wine"><a href="#deepin-以及-deepin-wine" class="headerlink" title="deepin 以及 deepin wine"></a><code>deepin</code> 以及 <code>deepin wine</code></h3><p>在 <code>windows</code> 与 <code>Linux</code> 之间换来换去，已经成了我的常态。</p>
+<p>但是国内软件并没有太多的<code>linux</code>版， <code>qq 微信 企业微信 qq音乐</code> 等等，当然在这点上， <code>deepin</code> 搞得 <code>deepin-wine</code> 功不可没，解决了大多数问题。并且可以适配到其他发行版， 这也是解决 <code>Linux</code> 下 <em><strong>简单</strong></em> 运行这些软件的途径之一。<code>deepin</code> 的贡献，当然还有<code>搜狗拼音</code> 和 <code>网易云音乐 linux版</code>（因为曲库问题，不想用）</p>
+<p>话又说回来，那只是简单解决。由于机器本身硬件适配问题以及发行版是移植<code>deepin-wine</code>, 总会有一些麻烦。 比如，<code>视频功能</code> 就不是很好，成功的几率是真小， 由于我机器的原因，就算是用 <code>deepin</code> 系统也没见成功。 别的发行版跑 <code>deepin-wine</code> 时， 也并不稳定，概率性的崩溃，或者耗资源多， 风扇起飞</p>
+<p>当然 <code>deepin-wine</code> 仍在发展， 相信以后会越来越好，你问我滋不滋瓷，我当然是滋瓷的嘛。 如果你只是为了简单用一些软件，收发消息之类的，可能<code>deepin-wine</code>就足够了， 没必要虚拟机了, 你可以尝试<code>deepin</code> 系统， 或者其他发行版下尝试<code>deepin-wine</code>。 地址：<br><a target="_blank" rel="noopener" href="https://github.com/wszqkzqk/deepin-wine-ubuntu">deepin-wine-ubuntu github 地址</a></p>
+<h3 id="2019-10-的官方-qq-linux版"><a href="#2019-10-的官方-qq-linux版" class="headerlink" title="2019.10 的官方 qq linux版"></a>2019.10 的官方 <code>qq linux版</code></h3><p>推出这个版本的因素有很多， 很重要的一点是: 腾讯内部 <code>linux(ubuntu 18.04)</code> 入域成功了， 成为很多开发与运维的新选择， 但是对于这些软件， 遇到了同样的问题， <code>qq 企业微信 微信</code> 等等，工作要用到， 所以需求提上日程很正常</p>
+<p>再就是国内 <code>linux</code> 下做开发的多起来， 用户人数增多。 <code>国产 linux</code> 也在成长， <code>deepin</code> 正在做 <code>龙芯</code> 的适配工作（看好deepin）, 所以 <code>linux</code> 下还是有潜在市场， 最直接的： <code>qq 音乐</code> 与 <code>网易云音乐</code>， 为了<code>qq 音乐</code>， 我不得不用 <code>wine</code> 或者 <code>虚拟机</code></p>
+<p>腾讯新出的 <code>qq linux版</code>， 虽然异常简陋，也不稳定…… 但这是一个好的开始，应该给点时间，要是真有心做这个工程， 一定会好起来的 （至少紧跟潮流: 扫码登录）</p>
+<h3 id="virtualbox"><a href="#virtualbox" class="headerlink" title="virtualbox"></a><code>virtualbox</code></h3><p>之前， <code>Linux</code> 下一直用着 <code>virtualbox</code>， 装个 <code>win7</code> 再开个无缝模式（就是不显示虚拟机的桌面，只显示虚拟机里的应用窗口，看起来就像与真机同在一个系统下）。 但是还是那个问题, 由于机器的原因， 摄像头是有问题的， 摄像头打开是蓝屏，不走摄像头的控制器。</p>
+<p>而且， 对<code>win 10</code> 支持并不好，卡的要命。</p>
+<h2 id="1-下载-vmware"><a href="#1-下载-vmware" class="headerlink" title="1. 下载 vmware"></a>1. 下载 vmware</h2><p>直接去官网，下载最新版就好了， 要 <code>登录</code> 而已， 你就注册一个账号， 它又不能把你怎么样。 包括<code>windows</code> 下，下载 <code>vmware 安装程序</code> 我也是直接官网下载:</p>
+<blockquote>
+<h3 id="vmware-官网下载-地址"><a href="#vmware-官网下载-地址" class="headerlink" title="vmware 官网下载 地址"></a><a target="_blank" rel="noopener" href="https://www.vmware.com/cn.html">vmware 官网下载 地址</a></h3></blockquote>
+<p><img src="../vmware_install/1.png" alt="vmware 下载"><br><img src="../vmware_install/2.png" alt="vmware 下载"></p>
+<p>下载完成后得到： </p>
+<p><img src="../vmware_install/3.png" alt="vmware 下载"></p>
+<h2 id="2-安装-vmware"><a href="#2-安装-vmware" class="headerlink" title="2. 安装 vmware"></a>2. 安装 vmware</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 打开终端， 执行该脚本</span></span><br><span class="line"></span><br><span class="line">chmod +x VMware-Workstation-Full-15.5.0-14665864.x86_64.bundle <span class="comment"># 给执行权限</span></span><br><span class="line"></span><br><span class="line">sudo ./VMware-Workstation-Full-15.5.0-14665864.x86_64.bundle <span class="comment"># 管理员身份</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="../vmware_install/4.png" alt="vmware 下载"></p>
+<p>软件列表会多出 3 个：</p>
+<p><img src="../vmware_install/5.png" alt="vmware 下载"></p>
+<h3 id="其他两个是工具，-我们只需要执行vmware-Workstation"><a href="#其他两个是工具，-我们只需要执行vmware-Workstation" class="headerlink" title="其他两个是工具， 我们只需要执行vmware Workstation"></a>其他两个是工具， 我们只需要执行<code>vmware Workstation</code></h3><h2 id="3-首次打开"><a href="#3-首次打开" class="headerlink" title="3. 首次打开"></a>3. 首次打开</h2><p> 首次打开就像在 <code>windows</code> 下一样， 有一些诸如 <code>是否试试获取更新</code>， <code>是否加入xxx体验计划</code> 以及 <code>激活码</code> 等等， 英文关键词大概就能猜出是在问什么， 根据自己习惯做选择</p>
+<ul>
+<li>第一页，一般是协议，肯定得选 <code>accept</code>， 不然没法继续  </li>
+<li>每次启动时检测更新？<br><img src="../vmware_install/6.png" alt="vmware 下载">  </li>
+<li>上传问题报告和使用记录帮助软件更好的发展（经典的用户体验计划）？<br><img src="../vmware_install/7.png" alt="vmware 下载">    </li>
+<li>vmware 共享主机的存放地址（手填绝对路径）：<br><img src="../vmware_install/11.png" alt="vmware 下载">  </li>
+<li>vmware server 的用户<br><img src="../vmware_install/8.png" alt="vmware 下载">   </li>
+<li>vmware server http 端口号<br><img src="../vmware_install/9.png" alt="vmware 下载">  </li>
+<li>序列码，随便搜一个对应vmware 版本的即可：<br><img src="../vmware_install/10.png" alt="vmware 下载">  </li>
+</ul>
+<h2 id="4-安装完成"><a href="#4-安装完成" class="headerlink" title="4. 安装完成"></a>4. 安装完成</h2><p>如果安装过程配置错了， 或者想修改， 打开软件设置基本都能找到</p>
+<p>软件的使用与 <code>windows</code> 没什么大区别， 见机行事</p>
+<h2 id="5-vmare-卸载"><a href="#5-vmare-卸载" class="headerlink" title="5. vmare 卸载"></a>5. vmare 卸载</h2><p>打开上边的脚本 <code>VMware-Workstation-Full-15.5.0-14665864.x86_64.bundle</code> 看一下源码， 就会发现脚本可以加参数， 而且功能不仅仅基本安装。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  打开终端， 执行 -h , 显示帮助文档</span></span><br><span class="line"></span><br><span class="line">./VMware-Workstation-Full-15.5.0-14665864.x86_64.bundle -h</span><br></pre></td></tr></table></figure>
+
+<h4 id="–uninstall-component-NAME-用来卸载"><a href="#–uninstall-component-NAME-用来卸载" class="headerlink" title="–uninstall-component=NAME 用来卸载"></a>–uninstall-component=NAME 用来卸载</h4><p>如果不知道不知道<code>NAME</code> 该填什么，可以先空着执行一下， 然后就会有列表：</p>
+<p><img src="../vmware_install/12.png" alt="vmware 下载"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 执行卸载，简单粗暴的通配符</span></span><br><span class="line"></span><br><span class="line">sudo   ./VMware-Workstation-Full-15.5.0-14665864.x86_64.bundle   --uninstall-component=vmare-*</span><br></pre></td></tr></table></figure>
+
+            </article>
+        </div>
+
+        <div class="col"></div>
+    </div>
+</div>
+    <footer class="h-25"> footer </footer>
+</body>
+
+</html>

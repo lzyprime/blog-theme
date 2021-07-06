@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    
+<link rel="stylesheet" href="/blog-theme/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/blog-theme/css/global.css">
+
+    
+<link rel="stylesheet" href="/blog-theme/css/article.css">
+
+    
+    
+<script src="/blog-theme/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <title>
+        I&#39;m prime
+    </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="bg-dark">
+    <header>
+    <nav class="navbar navbar-expand navbar-expand-lg navbar-dark sticky-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/blog-theme/">
+
+                
+
+            I&#39;m prime
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/">
+                                主页
+                            </a>
+                        </li>
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/archives/">
+                                归档
+                            </a>
+                        </li>
+
+                    
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+    <div class="container-fluid mt-md-5">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-5 shadow-lg">
+            <div class="container-fluid mt-5 text-center">
+                <h1 class="text-white">
+                    ssh 免密登录
+                </h1>
+                <p class="mt-2 text-secondary">
+                    2020.06.19
+                </p>
+            </div>
+
+            <article class="container-fluid text-white">
+                <h2 id="ssh-免密失败可能原因"><a href="#ssh-免密失败可能原因" class="headerlink" title="ssh 免密失败可能原因"></a>ssh 免密失败可能原因</h2><h3 id="1-目录及文件权限不正确"><a href="#1-目录及文件权限不正确" class="headerlink" title="1. 目录及文件权限不正确"></a>1. 目录及文件权限不正确</h3><ul>
+<li>家目录, .ssh: <code>750</code> 或 <code>700</code>, 不能77x</li>
+<li>rsa_id.pub, authorized_keys: 一般为<code>644</code></li>
+<li>rsa_id: <strong>必须</strong> <code>600</code></li>
+</ul>
+<h3 id="2-对端sshd服务"><a href="#2-对端sshd服务" class="headerlink" title="2. 对端sshd服务"></a>2. 对端sshd服务</h3><ul>
+<li>检查对端机器<code>sshd</code>服务活着， <code>ps aux | grep sshd</code><ul>
+<li>若未启动，<code>service sshd start</code></li>
+<li>若没有sshd只有ssh, 如ubuntu，一般是ssh server没安装。 <code>apt install openssh*</code></li>
+</ul>
+</li>
+<li>检查sshd配置是否正确, <code>/etc/ssh/sshd_config</code><ul>
+<li>Port</li>
+<li>PubkeyAuthentication</li>
+<li>PasswordAuthentication</li>
+<li>其他</li>
+</ul>
+</li>
+</ul>
+<h2 id="配置过程"><a href="#配置过程" class="headerlink" title="配置过程"></a>配置过程</h2><ol>
+<li>生成</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">ssh-keygen -t &lt;类型(一般为rsa)&gt; -C &lt;描述&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>copy</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id -i &lt;公钥地址(~/.ssh/id_rsa.pub)&gt;  &lt;对端用户名&gt;@&lt;对端机器ip&gt; -p &lt;端口(默认22)&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 样例</span></span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub prime@192.168.10.100 -p 36000</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>登录<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;对端用户名&gt;@&lt;对端机器ip&gt; -p &lt;端口(默认22)&gt;</span><br><span class="line"><span class="comment">## 第一次需要密码</span></span><br><span class="line"><span class="comment">## 需要同意落key, 出现[yes/no]时，输入yes并回车</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+            </article>
+        </div>
+
+        <div class="col"></div>
+    </div>
+</div>
+    <footer class="h-25"> footer </footer>
+</body>
+
+</html>

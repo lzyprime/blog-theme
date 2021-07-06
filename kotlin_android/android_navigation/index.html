@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    
+<link rel="stylesheet" href="/blog-theme/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/blog-theme/css/global.css">
+
+    
+<link rel="stylesheet" href="/blog-theme/css/article.css">
+
+    
+    
+<script src="/blog-theme/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <title>
+        I&#39;m prime
+    </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="bg-dark">
+    <header>
+    <nav class="navbar navbar-expand navbar-expand-lg navbar-dark sticky-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/blog-theme/">
+
+                
+
+            I&#39;m prime
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/">
+                                主页
+                            </a>
+                        </li>
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/archives/">
+                                归档
+                            </a>
+                        </li>
+
+                    
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+    <div class="container-fluid mt-md-5">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-5 shadow-lg">
+            <div class="container-fluid mt-5 text-center">
+                <h1 class="text-white">
+                    Android navigation组件
+                </h1>
+                <p class="mt-2 text-secondary">
+                    2020.11.24
+                </p>
+            </div>
+
+            <article class="container-fluid text-white">
+                <h2 id="kotlin-amp-android-笔记"><a href="#kotlin-amp-android-笔记" class="headerlink" title="kotlin &amp; android 笔记"></a><a href="https://lzyprime.github.io/kotlin_android/kotlin_android">kotlin &amp; android 笔记</a></h2><hr>
+<h2 id="λ："><a href="#λ：" class="headerlink" title="λ："></a>λ：</h2><p><code>navigation 组件</code> 是 <code>Android Jetpack</code>重要组成部分，推出3年左右，2018谷歌I/O大会也曾介绍过。主要用于组织<code>Fragment</code>，通过<code>Fragment</code>来实现不同内容片段的显示。包括同级之间切换，不同级之间跳转(如 列表item跳详情页)，代替以往跳转<code>Activity</code>的方式，推出<code>单Activity模式</code>。 </p>
+<p><strong><a target="_blank" rel="noopener" href="https://developer.android.google.cn/guide/navigation?hl=zh-cn">navigation 官网地址</a></strong></p>
+<p><em><strong>与<code>Activity</code>相比好处：</strong></em></p>
+<ol>
+<li>拿到同一份<code>Activity ViewModel</code>。 <code>ViewModel</code> 以<code>Activity</code>为单位共享，同一<code>Activity</code>下的<code>Fragment</code>可以拿到同一份<code>ViewModel</code>，所以如果直接跳转<code>Activity</code>数据共享要自己解决，传递或者全局缓存里取，同时还要考虑副本一致性，也就是我在一个页面修改数据，其他用到此数据的页面也应该同步修改。</li>
+</ol>
+<blockquote>
+<p><code>flutter Navigator1.0</code>里以<code>Route</code>组织页面，用<code>Provider</code>插件实现状态管理时，除非把<code>Provider</code>包在的<code>MaterialApp</code>的外层，否则，跳转其他<code>Route</code>就无法通过<code>Provider.of(context)</code>获取，数据处理就如同<code>Android Activity</code>, 包在最外层好使是因为<code>MaterialApp</code>生成时会构造一个<code>Navigator</code>来组织所有页面。通过<code>List&lt;_RouteEntry&gt; _history</code>和<code>GlobalKey&lt;OverlayState&gt; _overlayKey</code>保存信息。所以所有页面都是<code>MaterialApp</code>的子节点。  </p>
+<p>最近的<code>flutter 1.22</code>推出<code>Navigator2.0</code>, 可以用<code>List&lt;Page&lt;dynamic&gt;&gt; pages</code>组织页面，也就类似<code>Android navigation</code>组件，<code>flutter Page</code>好比<code>Android Fragment</code></p>
+</blockquote>
+<ol start="2">
+<li><p>导航图可以靠可视化工具拖框完成。每一个页面称作“目的地”， 通过之间连线、设置参数来实现页面跳转约束，同时可以设置过渡动画等。所有导航资源存在资源文件夹下的<code>navigation</code>文件夹里。也支持<code>Kotlin DSL</code>代码完成导航设置。</p>
+</li>
+<li><p><code>Safe Args</code>传递数据。<a target="_blank" rel="noopener" href="https://developer.android.google.cn/guide/navigation/navigation-pass-data?hl=zh-cn#use_keep_annotations">Safe Arges 官网地址</a>。保证安全的传递数据。</p>
+</li>
+</ol>
+<blockquote>
+<p>有句话： <em><strong>“通常情况下，强烈建议您仅在目的地之间传递最少量的数据。例如，您应该传递键来检索对象而不是传递对象本身，因为在 Android 上用于保存所有状态的总空间是有限的。”</strong></em>, 这同样适用于<code>flutter</code>。在<code>flutter</code>里并没有太好的副本一致性方案，所以我在<code>Bean</code>也就是数据解析时做了缓存，同一数据只会构造一次，之后全从缓存中取或者更新。利用<code>factory</code>构造函数将数据缓存、生成、更新、获取等操作隐形，达到简单的<code>Loc</code>的效果。(TODO: 有空再总结)</p>
+</blockquote>
+<p><em><strong>需要注意：</strong></em></p>
+<ol>
+<li>系统返回按钮和事件的处理。跳转<code>Fragment</code>时，要拦截并设置好<code>Activity</code>的返回按钮事件，否则整个<code>Activity</code>就关闭了。同时其他组件的状态更新也需要自己维护, 参考：<a target="_blank" rel="noopener" href="https://developer.android.google.cn/guide/navigation/navigation-ui?hl=zh-cn">使用 NavigationUI 更新界面组件</a></li>
+</ol>
+<blockquote>
+<p>这个问题在<code>flutter Navigator2.0</code>里同样存在。</p>
+</blockquote>
+<ol start="2">
+<li>同级<code>Fragment</code>切换需要重新构建，并不记录状态。通过把当前的<code>FragmentManager</code>交给<code>navigation</code>来实现页面切换时，每切换一次都要重建<code>Fragment</code>。</li>
+</ol>
+<h2 id="demo-添加登录页，详情页"><a href="#demo-添加登录页，详情页" class="headerlink" title="demo: 添加登录页，详情页"></a>demo: 添加登录页，详情页</h2><p>从之前<a href="https://lzyprime.github.io/kotlin_android/android_mvvm">demo</a>继续开发。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># android navigation demo</span></span><br><span class="line"><span class="comment"># 仓库地址: https://github.com/lzyprime/android_demos</span></span><br><span class="line"><span class="comment"># branch: navigation</span></span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> -b navigation https://github.com/lzyprime/android_demos</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-导入"><a href="#1-导入" class="headerlink" title="1. 导入"></a>1. 导入</h2><h3 id="使用入门-官网地址"><a href="#使用入门-官网地址" class="headerlink" title="使用入门 官网地址"></a><a target="_blank" rel="noopener" href="https://developer.android.google.cn/guide/navigation/navigation-getting-started?hl=zh-cn">使用入门 官网地址</a></h3><p>如果用<code>Safe Args</code>则要在最顶层引入插件，或者用<code>Bundle</code>代替<code>Safe Args</code>实现传递</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// project gradle</span></span><br><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        google()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Safe Args</span></span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">def</span> nav_version = <span class="string">&quot;2.3.1&quot;</span></span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&quot;androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// module gradle</span></span><br><span class="line">plugin &#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    id <span class="string">&quot;androidx.navigation.safeargs.kotlin&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// navigation</span></span><br><span class="line">    <span class="keyword">def</span> nav_version = <span class="string">&quot;2.3.1&quot;</span></span><br><span class="line">    implementation <span class="string">&quot;androidx.navigation:navigation-fragment-ktx:$nav_version&quot;</span></span><br><span class="line">    implementation <span class="string">&quot;androidx.navigation:navigation-ui-ktx:$nav_version&quot;</span></span><br><span class="line">    <span class="comment">// Feature module Support</span></span><br><span class="line">    <span class="comment">//implementation &quot;androidx.navigation:navigation-dynamic-features-fragment:$nav_version&quot;</span></span><br><span class="line">    <span class="comment">// Testing Navigation</span></span><br><span class="line">    <span class="comment">//androidTestImplementation &quot;androidx.navigation:navigation-testing:$nav_version&quot;</span></span><br><span class="line">    <span class="comment">// Jetpack Compose Integration</span></span><br><span class="line">    <span class="comment">//implementation &quot;androidx.navigation:navigation-compose:1.0.0-alpha01&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="2-导航图与目的地"><a href="#2-导航图与目的地" class="headerlink" title="2. 导航图与目的地"></a>2. 导航图与目的地</h2><p>参考 <a target="_blank" rel="noopener" href="https://developer.android.google.cn/guide/navigation/navigation-design-graph?hl=zh-cn">设计导航图
+</a>  和 <a target="_blank" rel="noopener" href="https://developer.android.google.cn/guide/navigation/navigation-conditional?hl=zh-cn">条件导航（官网地址）</a>。</p>
+<p>添加新的<code>android resource</code>, 类型选择<code>Navigation</code>, 同时会生成navigation目录。</p>
+<p><img src="../android_navigation/2.png"></p>
+<p>点击添加新的目的地(<code>Fragment</code>), 如果已经存在，列表里会显示。<em>注意一定要以<code>Fragment</code>为单位</em></p>
+<p><img src="../android_navigation/3.png"></p>
+<p>添加3个目的地。 <code>LoginFragment</code>在登录成功后会由<code>PhotoListFragment</code>取代，因此要设置<code>popUpTo</code>参数。参考<a target="_blank" rel="noopener" href="https://developer.android.google.cn/guide/navigation/navigation-navigate?hl=zh-cn">导航到目的地</a></p>
+<p>每一条导航规则都有自己的id。 用于<code>NavController.navigate</code>实现跳转。</p>
+<p><code>LoginFragment</code>为起始目的地，名字前会显示“主页”图标。</p>
+<p><img src="../android_navigation/4.png"></p>
+<h2 id="2-为Activity添加NavHost"><a href="#2-为Activity添加NavHost" class="headerlink" title="2. 为Activity添加NavHost"></a>2. 为<code>Activity</code>添加<code>NavHost</code></h2><p>在layout文件中添加<code>NavHostFragment</code>, 同时会报一个警告⚠，提示用<code>FragmentContainerView</code>作为<code>Fragment</code>容器。点击Fix应用该建议。</p>
+<p><img src="../android_navigation/5.png"><br><img src="../android_navigation/6.png"></p>
+<h2 id="3-登录功能及Activity目的地切换"><a href="#3-登录功能及Activity目的地切换" class="headerlink" title="3. 登录功能及Activity目的地切换"></a>3. 登录功能及<code>Activity</code>目的地切换</h2><p>此时app已经可以启动了，会显示起始目的地也就是<code>LoginFragment</code>。</p>
+<p>demo用到的<a target="_blank" rel="noopener" href="https://api.unsplash.com/">https://api.unsplash.com/</a>实际只需要access_key, 所以登录页只需要一个输入框和登录按钮。点击登录时会请求列表，若成功则替换为<code>PhotoListFragment</code>页。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// LoginFragment</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LoginFragment</span> : <span class="type">Fragment</span></span>(R.layout.fragment_login) &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> viewModel: ListPhotoViewModel <span class="keyword">by</span> activityViewModels()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onViewCreated</span><span class="params">(view: <span class="type">View</span>, savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onViewCreated(view, savedInstanceState)</span><br><span class="line">        login_btn.setOnClickListener &#123;</span><br><span class="line">            <span class="keyword">val</span> text = access_key_eidt_text.text.toString()</span><br><span class="line">            <span class="keyword">if</span> (text.isEmpty()) &#123;</span><br><span class="line">                Toast.makeText(context, <span class="string">&quot;不能为空!&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                Net.ACCESS_KEY = text</span><br><span class="line">                viewModel.refreshListPhotos()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考<a target="_blank" rel="noopener" href="https://developer.android.google.cn/guide/navigation/navigation-navigate?hl=zh-cn">导航到目的地</a>, 用<code>NavHost</code>的<code>NavController</code>来实现目的地跳转。</p>
+<p>参考<a target="_blank" rel="noopener" href="https://developer.android.google.cn/guide/navigation/navigation-ui">使用 NavigationUI 更新界面组件</a>，设置顶部appBar和系统返回事件相应</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MainActivity</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@AndroidEntryPoint</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> : <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> viewModel: ListPhotoViewModel <span class="keyword">by</span> viewModels()</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> loginSuccess = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> appBarConfiguration: AppBarConfiguration</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">val</span> navHost = supportFragmentManager.findFragmentById(R.id.mainNavHost) <span class="keyword">as</span> NavHostFragment</span><br><span class="line">        <span class="keyword">val</span> navController = navHost.findNavController()</span><br><span class="line"></span><br><span class="line">        appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.photoListFragment))</span><br><span class="line">        <span class="comment">// 顶部appBar</span></span><br><span class="line">        setupActionBarWithNavController(navController, appBarConfiguration)</span><br><span class="line"></span><br><span class="line">        viewModel.listPhotos.observe(<span class="keyword">this</span>) &#123;</span><br><span class="line">            <span class="comment">// 列表不为空,登录成功</span></span><br><span class="line">            <span class="keyword">if</span> (!loginSuccess &amp;&amp; it.isNotEmpty()) &#123;</span><br><span class="line">                loginSuccess = <span class="literal">true</span></span><br><span class="line">                Toast.makeText(<span class="keyword">this</span>, <span class="string">&quot;登录成功&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">                navController.navigate(R.id.action_loginFragment_to_photoListFragment)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onSupportNavigateUp</span><span class="params">()</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        <span class="comment">// 是否显示返回按钮</span></span><br><span class="line">        <span class="keyword">return</span> mainNavHost.findNavController().navigateUp(appBarConfiguration)</span><br><span class="line">                || <span class="keyword">super</span>.onSupportNavigateUp()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onBackPressed</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">// 系统返回事件</span></span><br><span class="line">        <span class="keyword">if</span> (!mainNavHost.findNavController().popBackStack()) finish()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-点击图片进入详情页，利用Safe-Args传递图片链接"><a href="#4-点击图片进入详情页，利用Safe-Args传递图片链接" class="headerlink" title="4. 点击图片进入详情页，利用Safe Args传递图片链接"></a>4. 点击图片进入详情页，利用<code>Safe Args</code>传递图片链接</h2><p>参考<a target="_blank" rel="noopener" href="https://developer.android.google.cn/guide/navigation/navigation-pass-data?hl=zh-cn">在目的地之间传递数据</a>, 在导航图编辑页面可视化编辑要传递的参数。</p>
+<p><code>SpecifyAmountFragmentDirections</code>, <code>ConfirmationFragmentArgs</code>为插件自动生成，可在java(generated)目录找到</p>
+<p><img src="../android_navigation/7.png"></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//PhotoListFragment 跳转逻辑</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PhotoListFragment</span> : <span class="type">Fragment</span></span>(R.layout.fragment_photo_list) &#123;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onBindViewHolder</span><span class="params">(holder: <span class="type">RecyclerView</span>.<span class="type">ViewHolder</span>, position: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">                    <span class="keyword">val</span> photo = photos[position]</span><br><span class="line"></span><br><span class="line">                    with(holder.itemView <span class="keyword">as</span> ImageView) &#123;</span><br><span class="line">                        Glide.with(<span class="keyword">this</span>).load(photo.urls.raw).into(<span class="keyword">this</span>)</span><br><span class="line">                        setOnClickListener &#123;</span><br><span class="line">                            <span class="keyword">val</span> directions = PhotoListFragmentDirections.actionPhotoListFragmentToDetailFragment(photo.urls.raw)</span><br><span class="line">                            <span class="keyword">this</span><span class="symbol">@PhotoListFragment</span>.findNavController().navigate(directions)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果使用<code>-ktx</code>版本，可以用<code>by navArgs()</code>来获取传递的参数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DetailFragment</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DetailFragment</span> : <span class="type">Fragment</span></span>(R.layout.fragment_detail) &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> args <span class="keyword">by</span> navArgs&lt;DetailFragmentArgs&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onViewCreated</span><span class="params">(view: <span class="type">View</span>, savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onViewCreated(view, savedInstanceState)</span><br><span class="line">        Glide.with(imageView).load(args.imageSrc).into(imageView)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+            </article>
+        </div>
+
+        <div class="col"></div>
+    </div>
+</div>
+    <footer class="h-25"> footer </footer>
+</body>
+
+</html>

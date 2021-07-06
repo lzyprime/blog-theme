@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    
+<link rel="stylesheet" href="/blog-theme/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/blog-theme/css/global.css">
+
+    
+<link rel="stylesheet" href="/blog-theme/css/article.css">
+
+    
+    
+<script src="/blog-theme/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <title>
+        I&#39;m prime
+    </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="bg-dark">
+    <header>
+    <nav class="navbar navbar-expand navbar-expand-lg navbar-dark sticky-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/blog-theme/">
+
+                
+
+            I&#39;m prime
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/">
+                                主页
+                            </a>
+                        </li>
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/archives/">
+                                归档
+                            </a>
+                        </li>
+
+                    
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+    <div class="container-fluid mt-md-5">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-5 shadow-lg">
+            <div class="container-fluid mt-5 text-center">
+                <h1 class="text-white">
+                    flutter mvvm 模式
+                </h1>
+                <p class="mt-2 text-secondary">
+                    2019.11.17
+                </p>
+            </div>
+
+            <article class="container-fluid text-white">
+                <h2 id="2020-01-16-更新"><a href="#2020-01-16-更新" class="headerlink" title="2020.01.16 更新"></a>2020.01.16 更新</h2><p>yesterday， 收到网友反馈，照抄如下内容不好用，希望我出个demo。 咋能不好用呢，下边这代码本身就可以当 demo 啊。于是老夫也照抄试了试，老夫也是一片爆红。。</p>
+<p>老夫按 model -&gt; viewModel -&gt; view 的顺序往下写，结果 model 就出错了。原因很简单： *<code>rxdart 更新了！！</code>*， 原以为就算更新也不至于换接口这么频啊。好家伙，又低估他们了。</p>
+<p>新版 <code>rxdart</code> 去掉了 <code>Observable</code> 类，相当于给原生 <code>Stream</code> 提供一组拓展函数。（详情可看<a target="_blank" rel="noopener" href="https://pub.dev/packages/rxdart">https://pub.dev/packages/rxdart</a>)，所以 <code>model</code> 里的返回值直接是原生 <code>Stream</code>，  不用再套一层。 其他该怎么用还怎么用。</p>
+<p>原文代码仍可用，注意插件版本号。</p>
+<p>这是用最新插件写的demo，<a target="_blank" rel="noopener" href="https://github.com/lzyprime/flutter_demos/tree/mvvm_demo">github 仓库: flutter_demos 分支: mvvm_demo</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone -b mvvm_demo https://github.com/lzyprime/flutter_demos.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="另外，重新写一下做一下补充。-新文内容-补充说明"><a href="#另外，重新写一下做一下补充。-新文内容-补充说明" class="headerlink" title="另外，重新写一下做一下补充。 新文内容, 补充说明"></a>另外，重新写一下做一下补充。 <a href="flutter_mvvm_%E6%A8%A1%E5%BC%8F2.md">新文内容, 补充说明</a></h3><hr>
+<h2 id="原文内容："><a href="#原文内容：" class="headerlink" title="原文内容："></a><em>原文内容</em>：</h2><h2 id="λ："><a href="#λ：" class="headerlink" title="λ："></a>λ：</h2><p>我的第一份<code>flutter</code>笔记，从选用那种架构模式开始。因为关于<code>flutter</code> 本身的 <code>安装，构建UI</code> 等等，比比皆是，除非疑难杂症，有必要鞋一份解决总结，其他的，官网和各大网站的手册和教材足够了。没必要功利到做个搬运工，从而赚取点击量</p>
+<p>架构模式这种东西，跟你具体用什么语言、什么框架，关系不大。简单讲就是你怎么组织代码。便于逻辑清晰，更具条理。避免代码一整驼一整驼，甚至复制粘贴，全是重复、冗余代码。</p>
+<p><em><strong>mvc -&gt; mvp -&gt; mvvm</strong></em>, 不断演进与升级。了解一下分别是什么后，<code>mvvm</code> 的一大优势便是 <code>view</code> 与 <code>model</code> 双向绑定，任何一方的变动，都可以通知到另外一方。而另外两个，<em>几乎是</em> 单方主动请求</p>
+<h2 id="mvvm"><a href="#mvvm" class="headerlink" title="mvvm"></a>mvvm</h2><p><img src="../flutter_mvvm_%E6%A8%A1%E5%BC%8F/mvvm.png" alt="mvvm"></p>
+<p><code>viewModel</code> 作为 <code>view</code> 和 <code>model</code> 的中间者，处理<code>view</code>发出的请求，并在<code>model</code>数据等变化时，通知<code>view</code> 更新UI。</p>
+<p>说起来很简单的样子。</p>
+<h2 id="flutter项目-mvvm"><a href="#flutter项目-mvvm" class="headerlink" title="flutter项目 mvvm"></a>flutter项目 mvvm</h2><h3 id="1-添加插件：provider-3-1-0-1-rxdart-0-22-2。-在-pubspec-yaml-文件"><a href="#1-添加插件：provider-3-1-0-1-rxdart-0-22-2。-在-pubspec-yaml-文件" class="headerlink" title="1. 添加插件：provider ^3.1.0+1 , rxdart ^0.22.2。 在 pubspec.yaml 文件"></a>1. 添加插件：<code>provider ^3.1.0+1</code> , <code>rxdart ^0.22.2</code>。 在 <code>pubspec.yaml</code> 文件</h3><p><img src="../flutter_mvvm_%E6%A8%A1%E5%BC%8F/pubspec.png" alt="pubspec.yaml"></p>
+<h3 id="2-view，-构建UI，数据来源于viewModel"><a href="#2-view，-构建UI，数据来源于viewModel" class="headerlink" title="2. view， 构建UI，数据来源于viewModel"></a>2. <code>view</code>， 构建UI，数据来源于<code>viewModel</code></h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file path : &#x27;package:client/views/login_widget.dart&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:client/view_models/login_view_model.dart&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LoginWidget</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">final</span> viewModel = Provider.of&lt;LoginViewModel&gt;(context); <span class="comment">// 获取上层provider</span></span><br><span class="line">    <span class="keyword">return</span> Column(</span><br><span class="line">      children: &lt;Widget&gt;[</span><br><span class="line">        TextField(</span><br><span class="line">          controller: viewModel.usernameController, <span class="comment">// 方便viewModel 获取输入内容</span></span><br><span class="line">        ),</span><br><span class="line">        TextField(</span><br><span class="line">          controller: viewModel.passwordController, <span class="comment">// 方便viewModel 获取输入内容</span></span><br><span class="line">        ),</span><br><span class="line"></span><br><span class="line">        <span class="comment">/// <span class="markdown">state 初始为 0，显示&quot;登录&quot; 字样；点击按钮后，加载过程值为 1；请求成功值为 2，显示对号</span></span></span><br><span class="line">        FlatButton(</span><br><span class="line">          child: viewModel.state == <span class="number">0</span> </span><br><span class="line">              ? Text(<span class="string">&quot;login&quot;</span>)</span><br><span class="line">              : (viewModel.state == <span class="number">1</span></span><br><span class="line">                  ? CircleAvatar(</span><br><span class="line">                      backgroundColor: color,</span><br><span class="line">                      child: CircularProgressIndicator(</span><br><span class="line">                        backgroundColor: Colors.white,</span><br><span class="line">                      ),</span><br><span class="line">                      maxRadius: <span class="number">10</span>)</span><br><span class="line">                  : Icon(</span><br><span class="line">                      Icons.done,</span><br><span class="line">                      color: Colors.white,</span><br><span class="line">                    )),</span><br><span class="line">          onPressed: viewModel.login,</span><br><span class="line">        )</span><br><span class="line">      ],</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-model-请求和处理"><a href="#3-model-请求和处理" class="headerlink" title="3. model, 请求和处理"></a>3. <code>model</code>, 请求和处理</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file path : package:client/models/login_model.dart</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LoginModel</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 建立 future 对象的 observable</span></span><br><span class="line">    Observable login(<span class="built_in">dynamic</span> data) =&gt; Observable.fromFuture(</span><br><span class="line">        http.post(<span class="string">&#x27;http://api_url&#x27;</span>, body: data)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-viewModel"><a href="#4-viewModel" class="headerlink" title="4. viewModel"></a>4. <code>viewModel</code></h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file path : &#x27;package:client/view_models/login_view_model.dart&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:client/models/login_model.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// <span class="markdown">with ChangeNotifer : 通过 notifyListeners() 函数，可以通知本对象数据的正在使用者们。 如 state 变量，在改变后调用 notifyListeners(), UI根据值重新构建登录按钮显示内容</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LoginViewModel</span> <span class="title">with</span> <span class="title">ChangeNotifier</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> _model = LoginModel(); <span class="comment">// model, 网络请求等处理</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">final</span> usernameController = TextEditingController();</span><br><span class="line">  <span class="keyword">final</span> passwordController = TextEditingController();</span><br><span class="line">  <span class="built_in">int</span> state = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/// <span class="markdown">login 请求需要的数据</span></span></span><br><span class="line">  <span class="keyword">get</span> _data =&gt; &#123;</span><br><span class="line">    <span class="string">&#x27;username&#x27;</span>: usernameController.text,</span><br><span class="line">    <span class="string">&#x27;password&#x27;</span>: passwordController.text</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> login() =&gt;_model.login(_data)</span><br><span class="line">  .doOnListen(()&#123;state = <span class="number">1</span>; notifyListeners();&#125;) <span class="comment">// 请求过程，state = 1, 显示加载，通知UI</span></span><br><span class="line">  .listen(<span class="comment">// listen 接收两个参数，成功后的处理，失败后的处理。</span></span><br><span class="line">      (res)&#123; </span><br><span class="line">    state = res[<span class="string">&#x27;result&#x27;</span>] == <span class="number">0</span> ? <span class="number">2</span> : <span class="number">0</span>; <span class="comment">// 登录成功时，回包中的result 字段为 0;</span></span><br><span class="line">    notifyListeners();</span><br><span class="line">  &#125;, (_)&#123; <span class="comment">// 请求出错</span></span><br><span class="line">      state = <span class="number">0</span>;</span><br><span class="line">      notifyListeners();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="main，-组装三者"><a href="#main，-组装三者" class="headerlink" title="main， 组装三者"></a><code>main</code>， 组装三者</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// import </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() =&gt; runApp(MyApp());</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> _loginViewModel = LoginViewModel();</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) =&gt;</span><br><span class="line">  <span class="comment">/// <span class="markdown">ChangeNotifierProvider</span></span></span><br><span class="line">   ChangeNotifierProvider.value(</span><br><span class="line">        value: _loginViewModel,</span><br><span class="line">        child: MaterialApp(</span><br><span class="line">        home: LoginWidget()</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><ul>
+<li><h3 id="state-0，-初始状态"><a href="#state-0，-初始状态" class="headerlink" title="state == 0， 初始状态"></a>state == 0， 初始状态</h3><p><img src="../flutter_mvvm_%E6%A8%A1%E5%BC%8F/state0.png" alt="state0"></p>
+</li>
+<li><h3 id="state-1-点击登录后，显示加载"><a href="#state-1-点击登录后，显示加载" class="headerlink" title="state == 1, 点击登录后，显示加载"></a>state == 1, 点击登录后，显示加载</h3><p><img src="../flutter_mvvm_%E6%A8%A1%E5%BC%8F/state1.png" alt="state1"></p>
+</li>
+<li><h3 id="state-2-登录成功"><a href="#state-2-登录成功" class="headerlink" title="state == 2, 登录成功"></a>state == 2, 登录成功</h3><p><img src="../flutter_mvvm_%E6%A8%A1%E5%BC%8F/state2.png" alt="state2"></p>
+</li>
+</ul>
+<h2 id="λ：-1"><a href="#λ：-1" class="headerlink" title="~λ："></a>~λ：</h2><ul>
+<li>只是简单例子。mvvm作为思想，怎么抽离数据和ui视具体情况而定，灵活解决</li>
+<li>插件只是为了更好组织，而且差价来自flutter官方团队，并不是第三方野路子。善于利用工具</li>
+<li>也可尝试用原生 <code>InheritedWidget</code> 及其附属内容自己封装出<code>provider</code>的效果</li>
+</ul>
+
+            </article>
+        </div>
+
+        <div class="col"></div>
+    </div>
+</div>
+    <footer class="h-25"> footer </footer>
+</body>
+
+</html>

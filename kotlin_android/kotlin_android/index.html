@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    
+<link rel="stylesheet" href="/blog-theme/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/blog-theme/css/global.css">
+
+    
+<link rel="stylesheet" href="/blog-theme/css/article.css">
+
+    
+    
+<script src="/blog-theme/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <title>
+        I&#39;m prime
+    </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="bg-dark">
+    <header>
+    <nav class="navbar navbar-expand navbar-expand-lg navbar-dark sticky-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/blog-theme/">
+
+                
+
+            I&#39;m prime
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/">
+                                主页
+                            </a>
+                        </li>
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/archives/">
+                                归档
+                            </a>
+                        </li>
+
+                    
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+    <div class="container-fluid mt-md-5">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-5 shadow-lg">
+            <div class="container-fluid mt-5 text-center">
+                <h1 class="text-white">
+                    kotlin &amp; android 笔记
+                </h1>
+                <p class="mt-2 text-secondary">
+                    2020.10.22
+                </p>
+            </div>
+
+            <article class="container-fluid text-white">
+                <h2 id="目录："><a href="#目录：" class="headerlink" title="目录："></a>目录：</h2><ol start="0">
+<li><a href="kotlin_android.md">λ</a></li>
+<li><a href="android_mvvm.md">android mvvm架构</a></li>
+<li><a href="android_navigation.md">android navigation组件</a></li>
+<li><a href="android_bottom_navigation.md">android 底部导航栏+页面切换</a></li>
+<li><a href="android_skia.md">android skia图形库</a></li>
+<li><a href="viewbinding_databinding.md">android ViewBinding, DataBinding</a></li>
+</ol>
+<h2 id="λ："><a href="#λ：" class="headerlink" title="λ："></a>λ：</h2><p>一直想写这份笔记。单是<code>kotlin</code>，就值得写。而<code>kotlin</code>早已被定为<code>android</code>开发一等语言，这也是<code>kotlin</code>最大的用武之地，所以把这两个东西放一块。</p>
+<p>我大二决定用<code>kotlin</code>写<code>andorid</code>的时候，Google刚把它置为一等开发语言两年多，市场大多数项目还是<code>java</code>，网上教程和学校里教的，也都还是<code>java</code>版本。但是我还是一如既往，不喜欢被牵着走。我花时间去读<code>kotlin</code>文档，如<code>haskell rust scala</code>等语言一样，是现在流行的“函数式”风格。语法设计简单先进，并没有难的地方，但又是强大灵活。</p>
+<p>写这种语言，代码量不多，但是动脑子多，怎样用最精简又不邪恶的写法实现一个功能，是真正体现水平的。就像我现在工作中正在写的<code>flutter</code>项目，一个功能函数被洋洋洒洒写了一页代码，乍一看肯定是复杂功能。但其实是因为糊代码惯了，动不动定临时变量、for循环，再加上算法学的糟糕，才会写出这种糟糕的代码。这个函数我重写后只有一行代码，本着“不能邪恶”的原则，我拆成两行。所以，真的是业务逻辑复杂吗，总觉得是基础不过关。写东西不动脑子一通糊。我感觉我现在专职删代码。</p>
+<p>那时<code>kotlin</code>还在<code>1.2.*</code>，协程还没稳定。而<code>android</code>还没重构<code>andoridx</code>库，也没有<code>jetpack</code>。当时好用的kotlin android库是<code>anko</code>，现在已经停止维护，因为有了<code>jetpack</code>。尽管如此，单凭<code>kotlin</code>语言和原有库的支持，已经比<code>java</code>好太多了。</p>
+<p>现在，Google出了<code>androidx jetpack</code>，<code>kotlin 协程</code>也早就稳定，更重要的是Google健全了开发文档。<a target="_blank" rel="noopener" href="https://developer.android.google.cn/?hl=zh-cn">andorid developer 官网</a> 从<code>mvvm</code>架构，到组件和工具的最佳组合，都有详细文档。同时还有<code>jetpack</code>最佳实践demo应用：<a target="_blank" rel="noopener" href="https://github.com/android/sunflower">sunflower</a>。并且明确说明部分内容只支持<code>kotlin</code>。</p>
+<p>要是新起个项目还是用<code>java</code>或者换汤不换药：仅仅是换个语言，架构和库仍是老旧过时。那就太不应该了，在我看来只是不爱学习罢了，其他都是借口。别人费力才去掉的诟病、糟粕，全都被找回来，还觉得自己起个架构很牛逼，优越感油然而生，于是觉得没人比得上自己，不必学习靠现有的知识储量也能胜任工作。因为不学习，所以遇到问题又拿出远古的解决方案……  这就是循环。</p>
+<p>关于坏习惯，不能再展开了。因为这些坏习惯导致了项目不断变糟糕。现在之所以重新拾起学习android新库这件事，是因为现有的正在开发的<code>flutter项目</code>因为<code>StatefulWidget Provider</code>等滥用、功能暴力实现等等导致性能出现大问题，而且功能还是不稳定的。以前只有一两个人开发的时候，我还有救场和修正的余地，但是现在人多了，我根本修不过来。人多不一定力量大，不看文档照葫芦画瓢写出来的东西，在我看来是在添乱。一个简单的列表，能有肉眼可见的掉帧卡顿，实现得有多糟糕。我优化了首页列表，可是这种实现还有很多，总不能我挨个重构，而且我一己之力追不上这么多人“创造”的速度。而且有点难度的需求和样式，就会说sdk不支持，我们不是原生之类的。实际并不是，所以这种需求都是我接，一群人说着这不行那不行的时候，我就说一个“可以”，然后就都不说话了。现在又换了新的说法：需求不合理，没有这么做的。产品就会说哪些主流app就是这样的… 不是sdk做不到，是用的人不知道sdk能做。</p>
+<p>摆在我这的有两条路，用<code>flutter</code>重构掉糟糕的实现,或者用原生从头构建，<code>android ios</code> 各一套。我估计了一下，要是<code>flutter</code>修改的话，无异于从头写，也就省去第一次写时的踩坑时间。而且之后的新需求肯定还会出这种问题，难道要不断地这样推翻写好的东西，为什么不在第一实现的时候多学学，好好写？ 既然无异于从头写，不如直接原生重构，原生里写的烂和好性能应该不会有太大差距，当然有可能又是我想多了…</p>
+<h2 id="学习来源："><a href="#学习来源：" class="headerlink" title="学习来源："></a>学习来源：</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://kotlinlang.org/">kotlin 官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.kotlincn.net/">kotlin 中文</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.android.google.cn/?hl=zh-cn">andorid developer 官网</a></li>
+</ul>
+
+            </article>
+        </div>
+
+        <div class="col"></div>
+    </div>
+</div>
+    <footer class="h-25"> footer </footer>
+</body>
+
+</html>

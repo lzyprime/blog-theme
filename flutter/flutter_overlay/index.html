@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    
+<link rel="stylesheet" href="/blog-theme/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/blog-theme/css/global.css">
+
+    
+<link rel="stylesheet" href="/blog-theme/css/article.css">
+
+    
+    
+<script src="/blog-theme/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <title>
+        I&#39;m prime
+    </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="bg-dark">
+    <header>
+    <nav class="navbar navbar-expand navbar-expand-lg navbar-dark sticky-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/blog-theme/">
+
+                
+
+            I&#39;m prime
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/">
+                                主页
+                            </a>
+                        </li>
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/archives/">
+                                归档
+                            </a>
+                        </li>
+
+                    
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+    <div class="container-fluid mt-md-5">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-5 shadow-lg">
+            <div class="container-fluid mt-5 text-center">
+                <h1 class="text-white">
+                    flutter自定义弹窗(一)：overlay
+                </h1>
+                <p class="mt-2 text-secondary">
+                    2020.08.20
+                </p>
+            </div>
+
+            <article class="container-fluid text-white">
+                <h2 id="λ"><a href="#λ" class="headerlink" title="λ:"></a>λ:</h2><blockquote>
+<p><em><strong>当前flutter版本：1.20.2</strong></em></p>
+</blockquote>
+<p><img src="../flutter_overlay/1.png" alt="需求"></p>
+<p>需求如图(画的示意图)，点击按钮弹出菜单区域，点击另外按钮时，关闭当前菜单同时打开对应菜单。</p>
+<p>按说下拉菜单应该用 <code>DropDownButton</code> 或者 <code>PopupMenuButton</code>之类的, 但是有几个条件满足不了：</p>
+<ol>
+<li>菜单宽度占满屏幕。</li>
+<li>其他按钮可以响应点击。</li>
+</ol>
+<p>尺寸，这两个按钮实现太难或者不可，底层做了尺寸限制。</p>
+<p>点击效果，这两个按钮弹出效果用的<code>PopupRoute</code>, 就像平时跳新页面时<code>Navigator.of(context).push(MaterialPageRoute(...))</code> 一个道理，差别是<code>PopupRoute</code>是透过的，下层的Widget仍可见。这一效果是因为成员变量<code>opaque</code>为<code>false</code>。<br>所以当点击 “第二个按钮所在位置” 时，并不会响应，顶多关闭当前菜单，因为按钮属于下层Widget，点击时其实是点击的“菜单所在页面”的空白区域。</p>
+<p><code>Dialog</code> 弹窗也是用这个实现的。底层通过<code>Navigator.of(...).push&lt;T&gt;(_DialogRoute&lt;T&gt;(...))</code> 显示<code>Dialog</code>, <code>_DialogRoute</code> 继承自<code>PopupRoute</code></p>
+<p><code>Route</code> 是另外的知识点，另作总结。</p>
+<h2 id="overlay"><a href="#overlay" class="headerlink" title="overlay"></a>overlay</h2><p>看了看<code>Tooltips</code>的实现，底层用的<code>Overlay</code>。因为<code>Tooltips</code>只能显示字符串，如果能自定义内容就好了。</p>
+<p><code>Overlay</code>本身继承自<code>StatefulWidget</code>，所以是可以直接拿来创建widget。但是我们上层一般都是用的 <code>WidgetApp</code> 或者 <code>MaterialApp</code> 组件，这两个组件里的 <code>Navigator</code> 会创建个 <code>Overlay</code> 来管理路由。也就是说树的上层节点已经有了，所以我们可以通过 <code>Overlay.of</code> 拿到上层的<code>OverlayState</code>:</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Overlay</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">static</span> OverlayState of(</span><br><span class="line">        BuildContext context, &#123;</span><br><span class="line">        <span class="built_in">bool</span> rootOverlay = <span class="keyword">false</span>,</span><br><span class="line">        Widget debugRequiredFor,</span><br><span class="line">      &#125;)</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// rootOverlay: </span></span><br><span class="line"><span class="comment">// 值为false, 就近查找，找到树中最近的节点; </span></span><br><span class="line"><span class="comment">// 如果为true, 则去找最顶层的节点。</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OverlayState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">Overlay</span>&gt; <span class="title">with</span> <span class="title">TickerProviderStateMixin</span> </span>&#123;</span><br><span class="line">    <span class="comment">/// <span class="markdown">存储所有的OverlayEntry</span></span></span><br><span class="line">    <span class="keyword">final</span> <span class="built_in">List</span>&lt;OverlayEntry&gt; _entries = &lt;OverlayEntry&gt;[];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// <span class="markdown">计算OverlayEntry的插入位置</span></span></span><br><span class="line">    <span class="built_in">int</span> _insertionIndex(OverlayEntry below, OverlayEntry above) &#123;</span><br><span class="line">        <span class="keyword">if</span> (below != <span class="keyword">null</span>) <span class="keyword">return</span> _entries.indexOf(below);</span><br><span class="line">        <span class="keyword">if</span> (above != <span class="keyword">null</span>) <span class="keyword">return</span> _entries.indexOf(above) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> _entries.length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// <span class="markdown">添加一个OverlayEntry， 在<span class="code">`_insertionIndex(below, above)`</span></span></span></span><br><span class="line">    <span class="comment">/// <span class="markdown">OverlayEntry里可以放个[Positioned]来确定位置。</span></span></span><br><span class="line">    <span class="keyword">void</span> insert(OverlayEntry entry, &#123; OverlayEntry below, OverlayEntry above &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// <span class="markdown">同insert，添加多个</span></span></span><br><span class="line">    <span class="keyword">void</span> insertAll(<span class="built_in">Iterable</span>&lt;OverlayEntry&gt; entries, &#123; OverlayEntry below, OverlayEntry above &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// <span class="markdown">更新当前的Overlayentry。将newEntries更新旧有的部分</span></span></span><br><span class="line">    <span class="comment">/// <span class="markdown">将旧有未更新的部分，添加到<span class="code">`_insertionIndex(below, above)`</span></span></span></span><br><span class="line">    <span class="keyword">void</span> rearrange(<span class="built_in">Iterable</span>&lt;OverlayEntry&gt; newEntries, &#123; OverlayEntry below, OverlayEntry above &#125;)&#123;</span><br><span class="line">        <span class="keyword">final</span> old = LinkedHashSet&lt;OverlayEntry&gt;.from(_entries);</span><br><span class="line">    </span><br><span class="line">        setState(() &#123;</span><br><span class="line">          _entries..clear()..addAll(newEntriesList);</span><br><span class="line">          old.removeAll(newEntriesList);</span><br><span class="line">          _entries.insertAll(_insertionIndex(below, above), old);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再往下就是渲染层render的实现，<code>_Theatre</code> 维护个特殊的<code>Stack</code></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_Theatre</span> <span class="keyword">extends</span> <span class="title">MultiChildRenderObjectWidget</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义弹出框-OverlayEntry"><a href="#自定义弹出框-OverlayEntry" class="headerlink" title="自定义弹出框 OverlayEntry"></a>自定义弹出框 OverlayEntry</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">OverlayEntry(&#123;</span><br><span class="line">  <span class="meta">@required</span> <span class="keyword">this</span>.builder,</span><br><span class="line">  <span class="built_in">bool</span> opaque = <span class="keyword">false</span>,</span><br><span class="line">  <span class="built_in">bool</span> maintainState = <span class="keyword">false</span>,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>由于<code>Overlay</code>底层是个特殊<code>Stack</code>, 所以<code>OverlayEntry</code>里可以放<code>Positioned</code>, 可以<code>Positioned.fill</code>看一下可控范围:</p>
+<p><img src="../flutter_overlay/2.png" alt="范围"></p>
+<p>满屏。用<code>Positioned</code>控制布局位置和大小，这就是另外的事情了。</p>
+<p>关闭<code>OverlayEntry</code>需要调用自身的<code>remove()</code> 方法。注意页面切换，页面关闭等等情况，都要自己处理。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> overlayEntry = OverlayEntry(...);</span><br><span class="line"></span><br><span class="line">overlayEntry.remove();</span><br></pre></td></tr></table></figure>
+
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/lzyprime/flutter_demos/tree/flutter_overlay">仓库地址 https://github.com/lzyprime/flutter_demos/tree/flutter_overlay</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> -b flutter_overlay https://github.com/lzyprime/flutter_demos.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="demo1-菜单弹窗"><a href="#demo1-菜单弹窗" class="headerlink" title="demo1: 菜单弹窗"></a>demo1: 菜单弹窗</h3><p><img src="../flutter_overlay/3.gif" alt="demo1"></p>
+<p>关于怎么确定按钮下方的坐标，老生常谈。</p>
+<h3 id="demo2-跟随按钮滚动"><a href="#demo2-跟随按钮滚动" class="headerlink" title="demo2: 跟随按钮滚动"></a>demo2: 跟随按钮滚动</h3><p><img src="../flutter_overlay/4.gif" alt="demo2"></p>
+<p>一个部件跟随另一个部件滚动，要用到 <code>CompositedTransformTarget</code> 和 <code>CompositedTransformFollower</code>，通过<code>LayerLink</code>绑定在一起。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CompositedTransformTarget(&#123;</span><br><span class="line">    Key key,</span><br><span class="line">    <span class="meta">@required</span> <span class="keyword">this</span>.link,</span><br><span class="line">    Widget child,</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> CompositedTransformFollower(&#123;</span><br><span class="line">    Key key,</span><br><span class="line">    <span class="meta">@required</span> <span class="keyword">this</span>.link,</span><br><span class="line">    <span class="keyword">this</span>.showWhenUnlinked = <span class="keyword">true</span>,</span><br><span class="line">    <span class="keyword">this</span>.offset = Offset.zero,</span><br><span class="line">    Widget child,</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// link: LayerLink, Target 和 Follower 设置同一个LayerLink实现跟随</span></span><br><span class="line">  <span class="comment">// showWhenUnlinked: 当Target不存在时，是否还显示</span></span><br><span class="line">  <span class="comment">// offset: 相对于Target左上角坐标进行偏移</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// example</span></span><br><span class="line">CompositedTransformTarget(</span><br><span class="line">                link: _layerLink,</span><br><span class="line">                child: RaisedButton(</span><br><span class="line">                  color: Colors.amberAccent,</span><br><span class="line">                  key: _buttonKey,</span><br><span class="line">                    onPressed: () &#123;</span><br><span class="line">                  <span class="keyword">if</span> (_overlayEntry != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    _overlayEntry.remove();</span><br><span class="line">                    _overlayEntry = <span class="keyword">null</span>;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                  &#125;</span><br><span class="line">                  <span class="keyword">final</span> buttonSize = (_buttonKey.currentContext.findRenderObject() <span class="keyword">as</span> RenderBox).size;</span><br><span class="line"></span><br><span class="line">                  Overlay.of(context).insert(_overlayEntry = OverlayEntry(</span><br><span class="line">                      builder: (context) =&gt; Positioned(child: CompositedTransformFollower(</span><br><span class="line">                        link: _layerLink,</span><br><span class="line">                        showWhenUnlinked: <span class="keyword">false</span>,</span><br><span class="line">                        offset: Offset(<span class="number">0</span>, buttonSize.height),</span><br><span class="line">                        child: Container(color: Colors.blue),</span><br><span class="line">                      ),width: buttonSize.width,</span><br><span class="line">                        height: <span class="number">300</span>,</span><br><span class="line">                      )));</span><br><span class="line">                &#125;),</span><br><span class="line">              ),</span><br></pre></td></tr></table></figure>
+
+<p>这只是demo, 细节忽略</p>
+<h2 id="～λ"><a href="#～λ" class="headerlink" title="～λ:"></a>～λ:</h2><p><code>Overlay</code>自由灵活，但是需要自己维护窗口关闭和显示的时机，处理不当，容易出bug。所以看需求而定，非要用的话，，<em><strong>谨慎</strong></em>。</p>
+<p>另外，这篇文章从7.26就开始写，写了一半。如今8.20了才完工。看源码学东西其实很快，但是做这种总结，要花好多功夫，可能比学习的过程还要麻烦。</p>
+<p>我还有很多东西没总结，但是顾虑花功夫在总结上有多大的用处。这让我想起了我之前搞得linux shell， 之前做后端和运维的时候，shell脚本非常熟练，从dev到外网全套工具链和自动化基本都是我写的，可现在不怎么碰之后，写之前我得先想想，不能顺手就来，了。</p>
+<p>总结，我只能尽力而为了，有空就搞吧。只有足够的积累，才会有值得总结的东西。</p>
+
+            </article>
+        </div>
+
+        <div class="col"></div>
+    </div>
+</div>
+    <footer class="h-25"> footer </footer>
+</body>
+
+</html>

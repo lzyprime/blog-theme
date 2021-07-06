@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    
+<link rel="stylesheet" href="/blog-theme/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/blog-theme/css/global.css">
+
+    
+<link rel="stylesheet" href="/blog-theme/css/article.css">
+
+    
+    
+<script src="/blog-theme/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <title>
+        I&#39;m prime
+    </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="bg-dark">
+    <header>
+    <nav class="navbar navbar-expand navbar-expand-lg navbar-dark sticky-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/blog-theme/">
+
+                
+
+            I&#39;m prime
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/">
+                                主页
+                            </a>
+                        </li>
+
+                    
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="/blog-theme/archives/">
+                                归档
+                            </a>
+                        </li>
+
+                    
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+    <div class="container-fluid mt-md-5">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-5 shadow-lg">
+            <div class="container-fluid mt-5 text-center">
+                <h1 class="text-white">
+                    135. 分发糖果(每日一题)
+                </h1>
+                <p class="mt-2 text-secondary">
+                    2020.12.24
+                </p>
+            </div>
+
+            <article class="container-fluid text-white">
+                <h2 id="leetcode-笔记"><a href="#leetcode-笔记" class="headerlink" title="leetcode 笔记"></a><a href="https://lzyprime.github.io/leetcode/leetcode">leetcode 笔记</a></h2><hr>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。</p>
+<p>你需要按照以下要求，帮助老师给这些孩子分发糖果：</p>
+<ul>
+<li>每个孩子至少分配到 1 个糖果。</li>
+<li>相邻的孩子中，评分高的孩子必须获得更多的糖果。</li>
+<li>那么这样下来，老师至少需要准备多少颗糖果呢？</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line"></span><br><span class="line">输入: [<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>]</span><br><span class="line">输出: <span class="number">5</span></span><br><span class="line">解释: 你可以分别给这三个孩子分发 <span class="number">2</span>、<span class="number">1</span>、<span class="number">2</span> 颗糖果。</span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line">输入: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>]</span><br><span class="line">输出: <span class="number">4</span></span><br><span class="line">解释: 你可以分别给这三个孩子分发 <span class="number">1</span>、<span class="number">2</span>、<span class="number">1</span> 颗糖果。</span><br><span class="line">     第三个孩子只得到 <span class="number">1</span> 颗糖果，这已满足上述两个条件。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/candy">https://leetcode-cn.com/problems/candy</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+</blockquote>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><p>开一个等长的数组 <code>cnt</code>，记录每人一颗糖后 <code>i</code> 位置额外要发几颗糖。</p>
+<p>从头到尾扫一遍数组，如果 <code>ratings[i] &gt; ratings[i - 1]</code> 说明比前一个人再多发一个糖，<code>cnt[i] = cnt[i - 1] + 1</code>； 否则不用多发任何糖， <code>cnt[i] = 0</code></p>
+<p>同理，从尾往头扫，如果 <code>ratings[i] &gt; ratings[i + 1]</code> 说明要比后一个人再多发一颗糖，需要的糖果数与现有的<code>cnt[i]</code>比较，留下最大的。</p>
+<p>结果 <code>人数 + 额外需要糖果数</code></p>
+<ul>
+<li><h3 id="c"><a href="#c" class="headerlink" title="c++"></a>c++</h3></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">candy</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp;ratings)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (ratings.<span class="built_in">empty</span>())</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> size = ratings.<span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line">        <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">cnt</span><span class="params">(size, <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; size; i++)</span><br><span class="line">            <span class="keyword">if</span> (ratings[i] &gt; ratings[i - <span class="number">1</span>])</span><br><span class="line">                cnt[i] = cnt[i - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> ans = size + cnt[size - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = size - <span class="number">2</span>, pre = <span class="number">0</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">            ans += <span class="built_in">max</span>(pre = ratings[i] &gt; ratings[i + <span class="number">1</span>] ? pre + <span class="number">1</span> : <span class="number">0</span>, cnt[i]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h3 id="kotlin"><a href="#kotlin" class="headerlink" title="kotlin"></a>kotlin</h3></li>
+</ul>
+<p>一刀流</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">candy</span><span class="params">(ratings: <span class="type">IntArray</span>)</span></span>: <span class="built_in">Int</span> = <span class="keyword">if</span> (ratings.isEmpty()) <span class="number">0</span> <span class="keyword">else</span> ratings.foldIndexed(IntArray(ratings.size)) &#123; i, arr, v -&gt; arr.also &#123; <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; v &gt; ratings[i - <span class="number">1</span>]) arr[i] = arr[i - <span class="number">1</span>] + <span class="number">1</span> &#125; &#125;.let &#123; cnt -&gt; ratings.foldRightIndexed(ratings.size + cnt.last() to <span class="number">0</span>) &#123; index, v, (ans, pre) -&gt; <span class="keyword">if</span> (index &lt; ratings.size - <span class="number">1</span> &amp;&amp; v &gt; ratings[index + <span class="number">1</span>]) ans + max(cnt[index], pre + <span class="number">1</span>) to pre + <span class="number">1</span> <span class="keyword">else</span> ans + cnt[index] to <span class="number">0</span> &#125; &#125;.first</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> kotlin.math.max</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">candy</span><span class="params">(ratings: <span class="type">IntArray</span>)</span></span>: <span class="built_in">Int</span> = <span class="keyword">if</span> (ratings.isEmpty()) <span class="number">0</span> <span class="keyword">else</span></span><br><span class="line">        ratings.foldIndexed(IntArray(ratings.size)) &#123; i, arr, v -&gt;</span><br><span class="line">            arr.also &#123; <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; v &gt; ratings[i - <span class="number">1</span>]) arr[i] = arr[i - <span class="number">1</span>] + <span class="number">1</span> &#125;</span><br><span class="line">        &#125;.let &#123; cnt -&gt;</span><br><span class="line">            ratings.foldRightIndexed(ratings.size to <span class="number">0</span>) &#123; index, v, (ans, pre) -&gt;</span><br><span class="line">                <span class="keyword">if</span> (index &lt; ratings.size - <span class="number">1</span> &amp;&amp; v &gt; ratings[index + <span class="number">1</span>])</span><br><span class="line">                    ans + max(cnt[index], pre + <span class="number">1</span>) to pre + <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    ans + cnt[index] to <span class="number">0</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.first</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h3 id="scala"><a href="#scala" class="headerlink" title="scala"></a>scala</h3></li>
+</ul>
+<p>一刀流</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">candy</span></span>(ratings: <span class="type">Array</span>[<span class="type">Int</span>]): <span class="type">Int</span> = ratings.indices.foldLeft(<span class="type">Array</span>.fill(ratings.length)(<span class="number">0</span>)) &#123; (arr, i) =&gt; <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; ratings(i) &gt; ratings(i - <span class="number">1</span>)) arr(i) = arr(i - <span class="number">1</span>) + <span class="number">1</span>; arr &#125;.zipWithIndex.foldRight((ratings.length, <span class="number">0</span>)) &#123; (i, acc) =&gt; <span class="keyword">if</span> (i._2 &lt; ratings.length - <span class="number">1</span> &amp;&amp; ratings(i._2) &gt; ratings(i._2 + <span class="number">1</span>)) (acc._1 + math.max(i._1, acc._2 + <span class="number">1</span>), acc._2 + <span class="number">1</span>) <span class="keyword">else</span> (acc._1 + i._1, <span class="number">0</span>) &#125;._1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">candy</span></span>(ratings: <span class="type">Array</span>[<span class="type">Int</span>]): <span class="type">Int</span> = ratings.indices.foldLeft(<span class="type">Array</span>.fill(ratings.length)(<span class="number">0</span>)) &#123; (arr, i) =&gt;</span><br><span class="line">    <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; ratings(i) &gt; ratings(i - <span class="number">1</span>)) arr(i) = arr(i - <span class="number">1</span>) + <span class="number">1</span>; arr</span><br><span class="line">  &#125;.zipWithIndex.foldRight((ratings.length, <span class="number">0</span>)) &#123; (i, acc) =&gt;</span><br><span class="line">    <span class="keyword">if</span> (i._2 &lt; ratings.length - <span class="number">1</span> &amp;&amp; ratings(i._2) &gt; ratings(i._2 + <span class="number">1</span>))</span><br><span class="line">      (acc._1 + math.max(i._1, acc._2 + <span class="number">1</span>), acc._2 + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      (acc._1 + i._1, <span class="number">0</span>)</span><br><span class="line">  &#125;._1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h3 id="rust"><a href="#rust" class="headerlink" title="rust"></a>rust</h3></li>
+</ul>
+<p>一刀流</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">candy</span></span>(ratings: <span class="built_in">Vec</span>&lt;<span class="built_in">i32</span>&gt;) -&gt; <span class="built_in">i32</span> &#123; (<span class="number">0</span>..ratings.len()).fold(<span class="built_in">vec!</span>[<span class="number">0</span>; ratings.len()], |<span class="keyword">mut</span> arr, i| &#123;<span class="keyword">if</span> i &gt; <span class="number">0</span> &amp;&amp; ratings[i] &gt; ratings[i - <span class="number">1</span>] &#123;arr[i] = arr[i - <span class="number">1</span>] + <span class="number">1</span>&#125; arr&#125;).iter().enumerate().rev().fold((ratings.len() <span class="keyword">as</span> <span class="built_in">i32</span>, <span class="number">0</span>), |(ans, pre), (i, &amp;v)| &#123;<span class="keyword">if</span> i &lt; ratings.len() - <span class="number">1</span> &amp;&amp; ratings[i] &gt; ratings[i + <span class="number">1</span>] &#123;(ans + max(v, pre + <span class="number">1</span>), pre + <span class="number">1</span>)&#125; <span class="keyword">else</span> &#123;(ans + v, <span class="number">0</span>)&#125;&#125;).<span class="number">0</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::cmp::max;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Solution &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">candy</span></span>(ratings: <span class="built_in">Vec</span>&lt;<span class="built_in">i32</span>&gt;) -&gt; <span class="built_in">i32</span> &#123;</span><br><span class="line">        (<span class="number">0</span>..ratings.len())</span><br><span class="line">            .fold(<span class="built_in">vec!</span>[<span class="number">0</span>; ratings.len()], |<span class="keyword">mut</span> arr, i| &#123;</span><br><span class="line">                <span class="keyword">if</span> i &gt; <span class="number">0</span> &amp;&amp; ratings[i] &gt; ratings[i - <span class="number">1</span>] &#123;</span><br><span class="line">                    arr[i] = arr[i - <span class="number">1</span>] + <span class="number">1</span></span><br><span class="line">                &#125;</span><br><span class="line">                arr</span><br><span class="line">            &#125;)</span><br><span class="line">            .iter()</span><br><span class="line">            .enumerate()</span><br><span class="line">            .rev()</span><br><span class="line">            .fold((ratings.len() <span class="keyword">as</span> <span class="built_in">i32</span>, <span class="number">0</span>), |(ans, pre), (i, &amp;v)| &#123;</span><br><span class="line">                <span class="keyword">if</span> i &lt; ratings.len() - <span class="number">1</span> &amp;&amp; ratings[i] &gt; ratings[i + <span class="number">1</span>] &#123;</span><br><span class="line">                    (ans + max(v, pre + <span class="number">1</span>), pre + <span class="number">1</span>)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    (ans + v, <span class="number">0</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">            .<span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            </article>
+        </div>
+
+        <div class="col"></div>
+    </div>
+</div>
+    <footer class="h-25"> footer </footer>
+</body>
+
+</html>

@@ -17,7 +17,7 @@
                     <% for(const item in theme.nav_menu) { %>
 
                         <li class="nav-item">
-                            <a class="nav-link <% if(is_home() && theme.nav_menu[item] == "/" || theme.nav_menu[item] == path) { %>active text-primary<%}%>" aria-current="page"
+                            <a class="nav-link <% if(theme.nav_menu[item] == "/" && is_home() || theme.nav_menu[item] == page.base) { %>active text-primary<%}%>" aria-current="page"
                                 href="<%- url_for(theme.nav_menu[item]) %>">
                                 <%= item %>
                             </a>

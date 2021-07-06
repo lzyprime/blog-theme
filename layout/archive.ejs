@@ -1,0 +1,45 @@
+<div class="container d-flex align-items-center justify-content-center h-25">
+    <p><span class="display-1 text-primary"><% if(is_year() || is_month()) { %><%= page.year %><% if(is_month()) { %>/<%= page.month%><% }} else { %>Archives<% } %></span>
+        <span class="badge bg-primary h3"><%= page.posts.length %></span>
+    </p>
+</div>
+<div class="container-lg justify-content-center">
+<% if (is_month()) { %>
+
+    <div class="list-group list-group-flush text-center">
+
+    <% page.posts.each(post => { %>
+        <a href="<%- url_for(post.path) %>" class="list-group-item list-group-item-action bg-dark text-success"><%= post.title %></a>
+    <% }); %>
+    
+    </div>
+
+<% } else { %>
+        
+    <%
+        let group_by_date = page.posts.reduce((acc, post) => {
+            let key = date(post.date, (is_year() || is_month()) ? "MM" : "YYYY");
+            (acc[key] = acc[key] ?? []).push(post);
+            return acc;
+        },  {});
+        
+        for (group_title of Object.keys(group_by_date).sort().reverse()) {
+            let group_posts = group_by_date[group_title];
+    %>
+
+        <a class="btn btn-dark w-100 btn-lg bg-gradient text-warning text-start" href="<%- url_for(path) + group_title %>">
+            <% if(is_year()) { %><%= page.year %>/<% } %><%= group_title %><span class="badge bg-primary ms-2"><%= group_posts.length %></span>
+        </a>
+        <div class="list-group list-group-flush text-center">
+            <% group_posts.forEach(post=> { %>
+                <a href="<%- url_for(post.path) %>" class="list-group-item list-group-item-action bg-dark text-success">
+                    <%= post.title %>
+                </a>
+                <% }); %>
+        </div>
+
+    <% } %>
+
+<% } %>
+
+</div>

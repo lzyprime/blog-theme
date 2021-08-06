@@ -7,7 +7,7 @@
         var debug = false;
     }
 
-    let per_index = config.index_generator.per_index;
+    let per_index = config.index_generator.per_page;
     let start_index = Math.max(page.current - 1, 1);
     let end_index = Math.min(start_index + per_index - 2, page.total);
     start_index = Math.min(Math.max(end_index - per_index, 1), start_index);

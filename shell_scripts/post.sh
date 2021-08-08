@@ -8,7 +8,7 @@ function dfs() {
 			cd ../
 		elif [[ "$i" =~ .*.md$ ]]; then 
 			filename=$(basename "$i" .md)
-			sed -i "s#($filename/#(../$filename/#" $i
+			sed -i "" "s#($filename/#(../$filename/#" $i
 			echo $filename finish
 		fi
 	done

@@ -1,45 +1,64 @@
-<div class="container d-flex align-items-center justify-content-center h-25">
-    <p><span class="display-1 text-primary"><% if(is_year() || is_month()) { %><%= page.year %><% if(is_month()) { %>/<%= page.month%><% }} else { %>Archives<% } %></span>
-        <span class="badge bg-primary h3"><%= page.posts.length %></span>
-    </p>
-</div>
-<div class="container-lg justify-content-center">
-<% if (is_month()) { %>
+<% 
+let group_by_date=site.posts.reduce((acc, post) => {
+    let key_year = date(post.date, "YYYY");
+    let key_month = date(post.date, "M");
+    let year_map = (acc[key_year] = acc[key_year] ?? {});
+    let month_list = (year_map[key_month] = year_map[key_month] ?? []);
+    month_list.push(post);
+    return acc;
+    }, {});
+%>
 
-    <div class="list-group list-group-flush text-center">
-
-    <% page.posts.each(post => { %>
-        <a href="<%- url_for(post.path) %>" class="list-group-item list-group-item-action bg-dark text-success"><%= post.title %></a>
-    <% }); %>
-    
+    <div class="container d-flex align-items-center justify-content-center h-25">
+        <p><span class="display-1 text-<%= theme.color.title %>">
+                <% if(is_year() || is_month()) { %>
+                    <%= page.year %><% if(is_month()) { %>.<%= page.month %>
+                <% }} else { %> 
+                    Archives 
+                <% } %>
+            </span>
+            <% if(is_year() || is_month()) { %>
+                <span class="badge bg-<%= theme.color.badge %> rounded-pill h3">
+                    <% if(is_month()) { %>
+                        <%- group_by_date[page.year][page.month].length %>
+                    <% } else { %>
+                        <%- Object.keys(group_by_date[page.year]).reduce((acc, month) => acc + group_by_date[page.year][month].length, 0) %>
+                    <% } %>
+                </span>
+                <% } %>
+        </p>
     </div>
 
-<% } else { %>
-        
-    <%
-        let group_by_date = page.posts.reduce((acc, post) => {
-            let key = date(post.date, (is_year() || is_month()) ? "MM" : "YYYY");
-            (acc[key] = acc[key] ?? []).push(post);
-            return acc;
-        },  {});
-        
-        for (group_title of Object.keys(group_by_date).sort().reverse()) {
-            let group_posts = group_by_date[group_title];
-    %>
-
-        <a class="btn btn-dark w-100 btn-lg bg-gradient text-warning text-start" href="<%- url_for(path) + group_title %>">
-            <% if(is_year()) { %><%= page.year %>/<% } %><%= group_title %><span class="badge bg-primary ms-2"><%= group_posts.length %></span>
-        </a>
-        <div class="list-group list-group-flush text-center">
-            <% group_posts.forEach(post=> { %>
-                <a href="<%- url_for(post.path) %>" class="list-group-item list-group-item-action bg-dark text-success">
-                    <%= post.title %>
-                </a>
+    <div class="container-lg">
+    <% if (is_month()) { %>
+            <% (group_by_date[page.year][page.month]).forEach(post=> { %>
+                <%- partial("_item/item_post", {post: post})%>
                 <% }); %>
+
+    <% } else if(is_year()) { %>
+        <div class="container-fluid text-center">
+            <% Object.keys(group_by_date[page.year]).forEach(month => { %>
+                <a href="./<%- date(group_by_date[page.year][month][0].date, "MM") %>" class="btn btn-outline-<%= theme.color.tag %> ms-3 mb-2"><%= month %><span class="badge bg-<%= theme.color.badge %> rounded-pill ms-3"><%= group_by_date[page.year][month].length %></span></a>
+            <% }) %>
         </div>
-
+    <% } else { %>
+        <h3 class="text-success text-center mb-1">times:</h3>
+        <div class="container-fluid text-center">
+            <% Object.keys(group_by_date).forEach(year => { %>
+                <a href="./<%= year %>" class="btn btn-outline-<%= theme.color.tag %> ms-3 mb-2"><%= year %><span class="badge bg-<%= theme.color.badge %> rounded-pill ms-3"><%- Object.keys(group_by_date[year]).reduce((acc, month) => acc + group_by_date[year][month].length, 0) %></span></a>
+            <% }) %>
+        </div>
+        <h3 class="text-success text-center mt-3 mb-1">categories:</h3>
+        <div class="container-fluid text-center">
+            <% site.categories.forEach(category => { %>
+                <a href="<%- url_for(category.path) %>" class="btn btn-outline-<%= theme.color.tag %> ms-3 mb-2"><%= category.name %><span class="badge bg-<%= theme.color.badge %> rounded-pill ms-3"><%= category.posts.length %></span></a>
+            <% }) %>
+        </div>
+        <h3 class="text-success text-center mt-3 mb-1">tags:</h3>
+        <div class="container-fluid text-center">
+            <% site.tags.forEach(tag => { %>
+                <a href="<%- url_for(tag.path) %>" class="btn btn-outline-<%= theme.color.tag %> ms-3 mb-2"><%= tag.name %><span class="badge bg-<%= theme.color.badge %> rounded-pill ms-3"><%= tag.posts.length %></span></a>
+            <% }) %>
+        </div>
     <% } %>
-
-<% } %>
-
-</div>
+    </div>

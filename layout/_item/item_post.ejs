@@ -1,12 +1,36 @@
-<% 
-    let post_time= post.updated ? post.updated : post.date; 
-%>
+<% let post_time=post.updated ? post.updated : post.date; %>
 
-<a class="btn btn-dark bg-gradient w-100 p-3 mb-5 text-center shadow-lg" href="<%- url_for(post.path) %>">
-    <h3 class="text-white">
-        <%= post.title %>
-    </h3>
-    <p class="text-secondary">
-        <%- date(post_time, 'YYYY.MM.DD') %>
-    </p>
-</a>
+    <div class="container-fluid p-3 mb-5 text-center bg-dark bg-gradient bg-shadow-lg rounded-3">
+        <a href="<%- url_for(post.path) %>" class="btn">
+            <h3 class="text-white">
+                <%= post.title %>
+            </h3>
+            <p class="text-secondary">
+                <%- date(post_time, 'YYYY.MM.DD' ) %>
+            </p>
+        </a>
+        <div class="row">
+            <div class="col-3"></div>
+            <p class="col-3 text-white text-start">
+                <% if (post.categories.length> 0) { %>
+                    categories:
+                    <% post.categories.forEach(category => { %>
+                        <span><a class="btn btn-sm btn-outline-success" href="<%- url_for(category.path) %>">
+                                <%= category.name %>
+                            </a></span>
+                    <% }) %>
+                <% } %>
+            </p>
+            <p class="col-3 text-white text-end">
+                <% if (post.tags.length> 0) { %>
+                tags:
+                <% post.tags.forEach(tag=> { %>
+                    <span><a class="btn btn-sm btn-outline-info" href="<%- url_for(tag.path) %>">
+                            <%= tag.name %>
+                        </a></span>
+                    <% }) %>
+                <% } %>
+            </p>
+            <div class="col-3"></div>
+        </div>
+    </div>

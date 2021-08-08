@@ -4,3 +4,9 @@ _banner: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bootstrap_log
 nav_menu:
   主页: /
   归档: archives/
+
+color:
+  title: primary # 大标题颜色
+  subtitle: white # 副标题颜色
+  tag: warning #标签颜色
+  badge: primary #文章数颜色

@@ -1,0 +1,11 @@
+<div class="container d-flex align-items-center justify-content-center h-25">
+    <p class="display-1 text-<%= theme.color.title %>"> <%= page.category %> </p>
+</div>
+
+<div class="container-lg my-5">
+    <% page.posts.forEach(post => { %>
+        <%- partial("_item/item_post", {post: post})%>
+    <% }); %>
+</div>
+
+<%- partial('_components/pagination', {page: page}) %>

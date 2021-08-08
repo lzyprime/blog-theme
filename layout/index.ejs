@@ -7,10 +7,10 @@
         <% } %>
 
         <div class="p-3 card-img-overlay text-center position-absolute top-50 start-50 translate-middle">
-            <p class="card-title display-1 fw-bold text-primary">
+            <p class="card-title display-1 fw-bold text-<%= theme.color.title %>">
                 <%= config.title %>
             </p>
-            <p class="card-text h1 text-white">
+            <p class="card-text h1 text-<%= theme.color.subtitle %>">
                 <%= config.subtitle %>
             </p>
         </div>
@@ -18,7 +18,7 @@
 
 <% } %>
 
-<div class="container w-75 my-5">
+<div class="container-lg">
     <% page.posts.forEach(post => { %>
         <%- partial("_item/item_post", {post: post})%>
     <% }); %>

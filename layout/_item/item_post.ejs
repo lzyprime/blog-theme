@@ -9,28 +9,5 @@
                 <%- date(post_time, 'YYYY.MM.DD' ) %>
             </p>
         </a>
-        <div class="row">
-            <div class="col-3"></div>
-            <p class="col-3 text-white text-start">
-                <% if (post.categories.length> 0) { %>
-                    categories:
-                    <% post.categories.forEach(category => { %>
-                        <span><a class="btn btn-sm btn-outline-success" href="<%- url_for(category.path) %>">
-                                <%= category.name %>
-                            </a></span>
-                    <% }) %>
-                <% } %>
-            </p>
-            <p class="col-3 text-white text-end">
-                <% if (post.tags.length> 0) { %>
-                tags:
-                <% post.tags.forEach(tag=> { %>
-                    <span><a class="btn btn-sm btn-outline-info" href="<%- url_for(tag.path) %>">
-                            <%= tag.name %>
-                        </a></span>
-                    <% }) %>
-                <% } %>
-            </p>
-            <div class="col-3"></div>
-        </div>
+        <%- partial("_components/post_tag_category_row", {post: post}) %>
     </div>
